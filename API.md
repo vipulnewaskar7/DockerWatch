@@ -4,7 +4,7 @@
 ## api/savehost
 
 Request:
-
+```
 {
   "requestid":"uuid",
   "user":"someone",
@@ -15,10 +15,10 @@ Request:
 	"address":"somewhere",
   }
 }
-
+```
 
 Response:
-
+```
 {
   "requestid":"uuid",
   "user":"someone",
@@ -27,11 +27,12 @@ Response:
 	"status":"success"
   }
 }
-
+```
 
 ## api/updatehost
 
 Request:
+```
 {
   "requestid":"uuid",
   "user":"someone",
@@ -42,9 +43,10 @@ Request:
 	"address":"somewhere",
   }
 }
-
+```
 
 Response:
+```
 {
   "requestid":"uuid",
   "user":"someone",
@@ -53,10 +55,10 @@ Response:
 	"status":"success"
   }
 }
-
+```
 
 ## api/deletehost
-
+```
 Request:
 {
   "requestid":"uuid",
@@ -68,9 +70,10 @@ Request:
 	"address":"somewhere",
   }
 }
-
+```
 
 Response:
+```
 {
   "requestid":"uuid",
   "user":"someone",
@@ -79,12 +82,12 @@ Response:
 	"status":"success"
   }
 }
-
+```
 
 ## Get All Hosts
 
 Request:
-
+```
 {
   "requestid":"uuid",
   "user":"someone",
@@ -95,10 +98,10 @@ Request:
 	"address":"somewhere",
   }
 }
-
+```
 
 Response:
-
+```
 {
   "requestid":"uuid",
   "user":"someone",
@@ -126,5 +129,5 @@ Response:
         ]
   }
 }
-
+```
 
