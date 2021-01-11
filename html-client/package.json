@@ -1,0 +1,16 @@
+{
+  "name": "html-client",
+  "version": "1.0.0",
+  "description": "html client for docker-watch",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6"
+  },
+  "author": "",
+  "license": "ISC"
+}
