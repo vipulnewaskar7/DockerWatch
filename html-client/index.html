@@ -83,13 +83,55 @@
                 </button>
               </div>
             </div>
-      
-      
-            
-<h1>It Works!</h1>
-<pre><code class="plaintext">
-    something
-</code></pre>
+
+            <div class="card-group">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Connected Host</h5>
+                  <p class="card-text">DevServer_001.</p>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Up time</h5>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Status</h5>
+                  <p class="card-text">Connected.</p>
+                </div>
+              </div>
+            </div>
+
+            <br>
+
+            <div class="card bg-dark text-white">
+              
+                <h5 class="card-title">System Logs</h5>
+                <pre><code class="plaintext">
+START GUI WM_LBUTTONDOWN BUTTON BUTTON-1 myprog.p
+START GUI WM_KILLFOCUS FILL-IN FILL-IN-1 myprog.p
+START GUI WM_SETFOCUS BUTTON BUTTON-1 myprog.p
+START GUI WM_LBUTTONUP BUTTON BUTTON-1 myprog.p
+PUSH FOCUS-IN BUTTON BUTTON-1 myprog.p
+PUSH ENTRY BUTTON BUTTON-1 myprog.p
+PUSH LEAVE FILL-IN FILL-IN-1 myprog.p
+Begin-Trigger "LEAVE OF FILL-IN FILL-IN-1" myprog.p
+End-Trigger "LEAVE OF FILL-IN FILL-IN-1" 
+PRGS LEAVE FILL-IN FILL-IN-1 return no-apply
+POP LEAVE FILL-IN FILL-IN-1 myprog.p
+START GUI WM_KILLFOCUS BUTTON BUTTON-1 myprog.p
+START GUI WM_SETFOCUS FILL-IN FILL-IN-1 myprog.p
+PRGS ENTRY BUTTON BUTTON-1 discarded
+POP ENTRY BUTTON BUTTON-1 myprog.p
+PRGS FOCUS-IN BUTTON BUTTON-1 discarded
+POP FOCUS-IN BUTTON BUTTON-1 myprog.p
+              </code></pre>
+                          </div>
+
+
            
           </main>
         </div>
