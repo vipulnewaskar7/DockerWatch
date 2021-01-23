@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Container } from 'src/Model/Container';
 import { Host } from 'src/Model/Host';
 
 @Component({
@@ -17,8 +18,16 @@ export class AppComponent {
   connectedHost: Host;
   defaultHost: Host = new Host("-","-","-","-");
 
+  containers: Container[];
+  selectedContainers: Container;
+
   constructor(){
     this.connectedHost = this.hosts[0];
+    this.containers = [
+      new Container("3727b0cdf479d","nginx:1.19.6-alpine","Up 14 seconds","running", ["/docker-demo_nginx_1"]),
+      new Container("77cef2b220a09","demo/frontend","Up 18 seconds","running", ["/docker-demo_frontend_1"])
+    ];
+    this.selectedContainers = this.containers[0];
   }
 
   ConnectHost(host: Host) {
@@ -27,6 +36,9 @@ export class AppComponent {
     } else {
       this.connectedHost = host;
     }
+  }
+  SelectContainer(container: Container) {
+    this.selectedContainers = container;
   }
 
 }
