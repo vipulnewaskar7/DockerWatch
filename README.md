@@ -6,7 +6,9 @@ Gives visual representations of containers/images on the host system
 #### Running the project
 From project root directory, i.e. DockerWatch, run :
 
-``` mvn exec:java -Dexec.mainClass="com.greenature.dockerwatch.Main" ```
+``` mvn clean```
+``` mvn install```
+``` mvn exec:java```
 
 DockerWatch will start running on port 8080.   
 Currently, it shows info about docker engine running on a local machine. 
