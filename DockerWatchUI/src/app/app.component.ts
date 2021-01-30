@@ -15,18 +15,19 @@ export class AppComponent {
   hosts: Host[];
 
   connectedHost: Host;
-  defaultHost: Host = new Host("-", "-", "-", "-",[],[]);
+  defaultHost: Host = new Host("-", "-", "-", "-", [], []);
 
   selectedContainers: Container;
 
   constructor(public httpService: HTTPService) {
-    
+
     this.hosts = [
       new Host("1", "Local_Host", "tcp://localhost:2375", "Last updated 3 mins ago", [], [])
     ];
     this.connectedHost = this.hosts[0];
     this.selectedContainers = this.connectedHost.Containers[0];
     this.GetImages();
+    this.GetContainer();
   }
 
   ConnectHost(host: Host) {
@@ -41,18 +42,21 @@ export class AppComponent {
     this.selectedContainers = container;
   }
 
-  async GetImages(){
+  async GetImages() {
     this.httpService.get<Image[]>("http://localhost:8080/api/v1/images").subscribe(images => {
       console.log(JSON.stringify(images));
       this.hosts[0].Images = images;
     });
   }
 
-  async GetContainer(){
+  async GetContainer() {
     this.httpService.get<Container[]>("http://localhost:8080/api/v1/containers").subscribe(containers => {
       console.log(JSON.stringify(containers));
       this.hosts[0].Containers = containers;
+      this.selectedContainers = this.connectedHost.Containers[0];
     });
   }
 
 }
+
+
