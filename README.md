@@ -5,11 +5,11 @@
   <a href="https://github.com/vipulnewaskar7/DockerWatch">
     <img src="DockerWatchUI/src/assets/image/DWlogo.png" alt="Logo" width="80" >
   </a>
-
   <h3 align="center">DockerWatch</h3>
 
   <p align="center">
     An project to watch over docker host.
+    <br />
     <br />
     <a href="https://github.com/vipulnewaskar7/DockerWatch/issues">Report Bug</a>
     ·
