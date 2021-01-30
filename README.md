@@ -1,133 +1,121 @@
-### DockerWatch 
 
-#
-Gives visual representations of containers/images on the host system   
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="DockerWatchUI/src/assets/image/DWlogo.png" alt="Logo" width="80" >
+  </a>
 
-#### Running the project
-From project root directory, i.e. DockerWatch, run :
+  <h3 align="center">DockerWatch</h3>
 
-``` mvn clean```
-``` mvn install```
-``` mvn exec:java```
+  <p align="center">
+    An project to watch over docker host.
+    <br />
+    <br />
+    <a href="https://github.com/vipulnewaskar7/DockerWatch/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/vipulnewaskar7/DockerWatch/issues">Request Feature</a>
+  </p>
+</p>
 
-DockerWatch will start running on port 8080.   
-Currently, it shows info about docker engine running on a local machine. 
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+  </ol>
+</details>
 
 
-#### Routes
 
-- /api/v1/images  :
-```
-# Depending on the images available on your host machine, it will return JSON like this:
-[
-    {
-        "Created": 1608071572,
-        "Id": "sha256:b4b9bf31ec035024f036a42d33857f1ee1eeae11e652a03bb1ed2b2f82e712ea",
-        "ParentId": "",
-        "RepoTags": [
-            "python:3.8-buster"
-        ],
-        "RepoDigests": [
-            "python@sha256:cd7610a0e50e32d7c43c7e86ab4f78a0311461d835ecba4c92ac552348b36cf0"
-        ],
-        "Size": 881985858,
-        "VirtualSize": 881985858,
-        "SharedSize": -1,
-        "Labels": null,
-        "Containers": -1
-    },
-    {
-        "Created": 1608063743,
-        "Id": "sha256:686282c805911045b707b253f89698d2fc3fe07d6625e33826c1d3cee2d20204",
-        "ParentId": "",
-        "RepoTags": [
-            "nginx:1.19.6-alpine"
-        ],
-        "RepoDigests": [
-            "nginx@sha256:260bab5962c53602e8ca516b430fe7981ee0d79c137b94d2c50a8e0df3dc1a9d"
-        ],
-        "Size": 22334395,
-        "VirtualSize": 22334395,
-        "SharedSize": -1,
-        "Labels": {
-            "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
-        },
-        "Containers": -1
-    }
-]
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-```
+The DockerWatch project is provide the convinence way to watch over multiple Docker hosts. Projcet to watch over docker host container and live logs -- I think this is it.
 
-- /api/v1/containers 
-```
-[
-{
-    "Command": "/docker-entrypoint.sh nginx -g 'daemon off;'",
-    "Created": 1610786654,
-    "Id": "2213415f3393727b0cdf479d6e60d80aa8c64171521524e6d7bb6350ec047abe",
-    "Image": "nginx:1.19.6-alpine",
-    "ImageID": "sha256:686282c805911045b707b253f89698d2fc3fe07d6625e33826c1d3cee2d20204",
-    "Names": [
-        "/docker-demo_nginx_1"
-    ],
-    "Ports": [
-        {
-            "IP": "0.0.0.0",
-            "PrivatePort": 80,
-            "PublicPort": 80,
-            "Type": "tcp"
-        }
-    ],
-    "Status": "Up 14 seconds",
-    "State": "running",
-    "SizeRw": null,
-    "SizeRootFs": null,
-    "HostConfig": {
-        "NetworkMode": "docker-demo_default"
-    },
-    "Mounts": [
-        {
-            "Name": null,
-            "Source": "/run/desktop/mnt/host/d/Downloads/chrome/demo/docker-demo/nginx/nginx.conf",
-            "Destination": "/etc/nginx/nginx.conf",
-            "Driver": null,
-            "Mode": null,
-            "RW": false,
-            "Propagation": "rprivate"
-        }
-    ]
-},
-{
-    "Command": "yarn start",
-    "Created": 1610786653,
-    "Id": "a09998903b85f29c4d677cef2b220a09da87f2556a2f4e9534f2f4e162bcfaff",
-    "Image": "demo/frontend",
-    "ImageID": "sha256:273b214a7fa244060d5eeb23153521c19207f9b89a48fd07e2b78be51bac6cb8",
-    "Names": [
-        "/docker-demo_frontend_1"
-    ],
-    "Ports": [
-        {
-            "IP": "0.0.0.0",
-            "PrivatePort": 3000,
-            "PublicPort": 49153,
-            "Type": "tcp"
-        }
-    ],
-    "Status": "Up 14 seconds",
-    "State": "running",
-    "SizeRw": null,
-    "SizeRootFs": null,
-    "HostConfig": {
-        "NetworkMode": "docker-demo_default"
-    },
-    "Mounts": []
-}
-]
-```
+Gives visual representations of containers/images on the host system. DockerWatch will start running on port 8080. Currently, it shows info about docker engine running on a local machine. 
 
-RIP Best Practices   
-RIP Naming Conventions   
-Priority on bootstrapping the project,   
-creating end to end linking, handshaking among the services,   
-and bring all on track
+Here's why:
+* View Container and image details of docker.
+* Connect with multiple remote docker host.
+* Perform some operations on docker host.
+
+A list of commonly used resources that I find helpful are listed in the acknowledgements.
+
+### Built With
+
+This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+* [Bootstrap](https://getbootstrap.com)
+* [JQuery](https://jquery.com)
+* [Angular](https://angular.io)
+* [Spring Boot](https://spring.io)
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+This is an example of how do you setting up your project locally. To get a local copy up and running follow these simple example steps.
+
+### Prerequisites
+
+To Get this project up and running you need to install following tools / software on your system.
+
+* [Docker](https://www.docker.com)
+* [Java](https://openjdk.java.net)
+* [Maven](https://maven.apache.org)
+* [Node.js](https://nodejs.org)
+  
+
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/vipulnewaskar7/DockerWatch.git
+   ```
+
+#### DockerWatch Spring Server  
+
+1. From project root directory, i.e. DockerWatch, run :
+   ```sh
+   mvn clean
+   ```
+2. Install maven dependancies
+   ```sh
+   mvn install
+   ```
+3. Start your `spring-boot` application
+   ```sh
+   mvn exec:java
+   ```
+  
+#### DockerWatch UI  
+  
+1. Change Directory and Install NPM packages
+   ```sh
+   cd DockerWatchUI
+   npm install
+   ```
+2. Start your `angular` application
+   ```sh
+   npm run start
+   ```
+
+#### Docker Setup  
+
+1. Open Docker Desktop and follow instruction
+   ```sh
+   Docker > Settings > General
+   ```
+2. `enable` The folowing checkbox to expose the docker API on localhost
+   ```sh
+   Expose daemon on tcp://localhost:2375 without TLS
+   ```
