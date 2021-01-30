@@ -13,17 +13,34 @@
     </parent>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <configuration>
-                    <mainClass>com.greenature.dockerwatch.Main</mainClass>
-                    <!--                    <arguments>-->
-                    <!--                        <argument></argument>-->
-                    <!--                    </arguments>-->
-                </configuration>
-            </plugin>
+            
+
+
+<plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <executable>maven</executable>
+          <mainClass>com.greenature.dockerwatch.Main</mainClass>
+          <arguments>
+            <argument>-X</argument>
+            <argument>myproject:dist</argument>
+          </arguments>
+          <environmentVariables>
+            <LANG>en_US</LANG>
+          </environmentVariables>
+        </configuration>
+      </plugin>
+
         </plugins>
     </build>
     <dependencies>
