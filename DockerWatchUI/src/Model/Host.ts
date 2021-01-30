@@ -1,14 +1,20 @@
+import {Image} from './Image';
+import {Container} from './Container';
 
 export class Host {
-    id: string;
-    name: string;
-    address: string;
-    status: string;
+    Id: string;
+    Name: string;
+    Address: string;
+    Status: string;
+    Images: Image[];
+    Containers: Container[];
   
-    constructor(id: string, name: string, address: string, status: string) {
-      this.id = id;
-      this.name = name;
-      this.address = address;
-      this.status = status;
+    constructor(id: string, name: string, address: string, status: string, images: Image[], containers:Container[]) {
+      this.Id = id;
+      this.Name = name;
+      this.Address = address;
+      this.Status = status;
+      this.Images=images;
+      this.Containers = containers;
     }
   }

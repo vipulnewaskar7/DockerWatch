@@ -1,6 +1,6 @@
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">
-    <img src="assets/image/DWlogo.png" width="30" alt="logo" />
+    <img src="assets/image/DWlogo.png" width="60" alt="logo" />
     &nbsp; Docker Watch</a>
   <button class="navbar-toggler d-md-none collapsed" type="button" data-bs-toggle="collapse"
     data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,13 +35,13 @@
           <li class="nav-item" *ngFor="let host of hosts">
             <a class="nav-link" href="#">
               <button type="button" style="width: 100%;" (click)="ConnectHost(host)"
-                class="btn {{ host.id === connectedHost.id ? 'btn-outline-success' : 'btn-outline-warning' }}">
+                class="btn {{ host.Id === connectedHost.Id ? 'btn-outline-success' : 'btn-outline-warning' }}">
 
                 <h4>
                   <i class="fa fa-server" aria-hidden="true"></i>
-                  &nbsp; {{ host.name }} <br />
+                  &nbsp; {{ host.Name }} <br />
                 </h4>
-                {{ host.id === connectedHost.id ? 'Connected' : 'Disconnected' }}
+                {{ host.Id === connectedHost.Id ? 'Connected' : 'Disconnected' }}
               </button>
 
             </a>
@@ -67,19 +67,19 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Connected Host</h5>
-            <p class="card-text">{{ connectedHost.name }}</p>
+            <p class="card-text">{{ connectedHost.Name }}</p>
           </div>
         </div>
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Up time</h5>
-            <p class="card-text"><small class="text-muted">{{ connectedHost.status }}</small></p>
+            <p class="card-text"><small class="text-muted">{{ connectedHost.Status }}</small></p>
           </div>
         </div>
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Status</h5>
-            <p class="card-text">{{ connectedHost.id === "-" ? "Disconnected" : "Connected" }}</p>
+            <p class="card-text">{{ connectedHost.Id === "-" ? "Disconnected" : "Connected" }}</p>
           </div>
         </div>
       </div>
@@ -120,9 +120,9 @@
           <div class="row">
             <div class="col-2">
               <div class="nav flex-column nav-pills" aria-orientation="vertical">
-                <div  *ngFor="let container of containers; index as i">
+                <div  *ngFor="let container of this.connectedHost.Containers; index as i">
                   <a class="nav-link {{selectedContainers.Id === container.Id ? 'active' : '' }}"  data-toggle="pill" href="#v-pills-{{container.Id}}" 
-                    (click)="SelectContainer(container)">{{container.Id}} {{ i }}</a>
+                    (click)="SelectContainer(container)">{{container.Names[0]}}</a>
                 </div>
               </div>
             </div>
@@ -131,7 +131,7 @@
 
               <div class="tab-content" >
                 
-                <div class="tab-pane fade {{selectedContainers.Id === container.Id ? 'show active' : '' }}" *ngFor="let container of containers;" >
+                <div class="tab-pane fade {{selectedContainers.Id === container.Id ? 'show active' : '' }}" *ngFor="let container of this.connectedHost.Containers;" >
                   <div class="card bg-dark text-white">
                     {{ container.Id }}
                     <h5 class="card-title">System Logs</h5>
@@ -164,13 +164,13 @@ POP FOCUS-IN BUTTON BUTTON-1 myprog.p
         </div>
         <div id="Images" class="container tab-pane fade"><br>
           <h3>Image List</h3>
-          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.</p>
+          <ul >
+            <li *ngFor="let imageItem of this.connectedHost.Images">
+              {{ imageItem.RepoTags[0] }}
+            </li>
+          </ul>
         </div>
       </div>
-
-
-
     </main>
   </div>
 </div>

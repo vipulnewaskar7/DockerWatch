@@ -1,16 +1,45 @@
+
 export class Image {
     Created: string;
     Id: string;
+    ParentId: string;
     RepoTags: string[];
+    RepoDigests: string[];
     Size: string;
-    Labels: string[];
+    VirtualSize: string;
+    SharedSize: string;
+    Labels;
     Containers: string;
-    constructor(Created: string, Id: string, RepoTags: string[], Size: string, Labels: string[], Containers: string) {
-        this.Containers = Containers;
+
+    constructor(
+        Created: string,
+        Id: string,
+        ParentId: string,
+        RepoTags: string[],
+        RepoDigests: string[],
+        Size: string,
+        VirtualSize: string,
+        SharedSize: string,
+        Labels: Label,
+        Containers: string,
+    ) {
         this.Created = Created;
-        this.RepoTags = RepoTags;
-        this.Size = Size;
-        this.Labels = Labels;
         this.Id = Id;
+        this.ParentId = ParentId;
+        this.RepoTags = RepoTags;
+        this.RepoDigests = RepoDigests;
+        this.Size = Size;
+        this.VirtualSize = VirtualSize;
+        this.SharedSize = SharedSize;
+        this.Labels = Labels;
+        this.Containers = Containers;
+    }
+
+}
+
+export class Label {
+    maintainer: string;
+    constructor(maintainer: string) {
+        this.maintainer = maintainer;
     }
 }
