@@ -11,7 +11,6 @@
   <p align="center">
     An project to watch over docker host.
     <br />
-    <br />
     <a href="https://github.com/vipulnewaskar7/DockerWatch/issues">Report Bug</a>
     ·
     <a href="https://github.com/vipulnewaskar7/DockerWatch/issues">Request Feature</a>
