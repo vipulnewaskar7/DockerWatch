@@ -84,16 +84,10 @@ To Get this project up and running you need to install following tools / softwar
 
 #### DockerWatch Spring Server  
 
-1. From project root directory, i.e. DockerWatch, run :
+1. From project root directory, i.e. DockerWatch, Install maven dependancies and Start your `spring-boot` application :
    ```sh
    mvn clean
-   ```
-2. Install maven dependancies
-   ```sh
    mvn install
-   ```
-3. Start your `spring-boot` application
-   ```sh
    mvn exec:java
    ```
   
