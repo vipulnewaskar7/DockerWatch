@@ -32,6 +32,9 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
+    <li>
+      <a href="#api-usage">API Usage</a>
+    </li>
   </ol>
 </details>
 
@@ -113,3 +116,19 @@ To Get this project up and running you need to install following tools / softwar
    ```sh
    Expose daemon on tcp://localhost:2375 without TLS
    ```
+
+<!-- API Usage -->
+## API Usage
+
+This application has exposed RESTful API calls for external usage.
+
+_For more examples, please refer to the [Documentation](https://github.com/vipulnewaskar7/DockerWatch/blob/develop/API.md)_  
+ 
+  
+  
+RIP Best Practices   
+RIP Naming Conventions   
+Priority on bootstrapping the project,   
+creating end to end linking, handshaking among the services,   
+and bring all on track
+
