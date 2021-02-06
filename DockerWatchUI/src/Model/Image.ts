@@ -1,24 +1,24 @@
 
 export class Image {
-    Created: string;
+    Created: number;
     Id: string;
     ParentId: string;
     RepoTags: string[];
     RepoDigests: string[];
-    Size: string;
-    VirtualSize: string;
+    Size: number;
+    VirtualSize: number;
     SharedSize: string;
-    Labels;
+    Labels:Label;
     Containers: string;
 
     constructor(
-        Created: string,
+        Created: number,
         Id: string,
         ParentId: string,
         RepoTags: string[],
         RepoDigests: string[],
-        Size: string,
-        VirtualSize: string,
+        Size: number,
+        VirtualSize: number,
         SharedSize: string,
         Labels: Label,
         Containers: string,

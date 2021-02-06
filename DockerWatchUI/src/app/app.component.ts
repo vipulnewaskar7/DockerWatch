@@ -14,6 +14,24 @@ export class AppComponent {
 
   hosts: Host[];
 
+  logs: string = `START GUI WM_LBUTTONDOWN BUTTON BUTTON-1 myprog.p
+START GUI WM_KILLFOCUS FILL-IN FILL-IN-1 myprog.p
+START GUI WM_SETFOCUS BUTTON BUTTON-1 myprog.p
+START GUI WM_LBUTTONUP BUTTON BUTTON-1 myprog.p
+PUSH FOCUS-IN BUTTON BUTTON-1 myprog.p
+PUSH ENTRY BUTTON BUTTON-1 myprog.p
+PUSH LEAVE FILL-IN FILL-IN-1 myprog.p
+Begin-Trigger "LEAVE OF FILL-IN FILL-IN-1" myprog.p
+End-Trigger "LEAVE OF FILL-IN FILL-IN-1" 
+PRGS LEAVE FILL-IN FILL-IN-1 return no-apply
+POP LEAVE FILL-IN FILL-IN-1 myprog.p
+START GUI WM_KILLFOCUS BUTTON BUTTON-1 myprog.p
+START GUI WM_SETFOCUS FILL-IN FILL-IN-1 myprog.p
+PRGS ENTRY BUTTON BUTTON-1 discarded
+POP ENTRY BUTTON BUTTON-1 myprog.p
+PRGS FOCUS-IN BUTTON BUTTON-1 discarded
+POP FOCUS-IN BUTTON BUTTON-1 myprog.p`;
+
   connectedHost: Host;
   defaultHost: Host = new Host("-", "-", "-", "-", [], []);
 
@@ -56,6 +74,7 @@ export class AppComponent {
       this.selectedContainers = this.connectedHost.Containers[0];
     });
   }
+
 
 }
 

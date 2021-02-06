@@ -31,7 +31,6 @@
         </h6>
         <br />
         <ul class="nav flex-column mb-2">
-
           <li class="nav-item" *ngFor="let host of hosts">
             <a class="nav-link" href="#">
               <button type="button" style="width: 100%;" (click)="ConnectHost(host)"
@@ -43,10 +42,8 @@
                 </h4>
                 {{ host.Id === connectedHost.Id ? 'Connected' : 'Disconnected' }}
               </button>
-
             </a>
           </li>
-
         </ul>
       </div>
     </nav>
@@ -83,10 +80,7 @@
           </div>
         </div>
       </div>
-
       <br>
-
-
 
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
@@ -101,7 +95,6 @@
       <!-- Tab panes -->
       <div class="tab-content">
         <div id="Containers" class="tab-pane active"><br>
-
           <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h4>Containers</h4>
@@ -116,47 +109,32 @@
               </button>
             </div>
           </div>
-
           <div class="row">
             <div class="col-2">
               <div class="nav flex-column nav-pills" aria-orientation="vertical">
-                <div  *ngFor="let container of this.connectedHost.Containers; index as i">
-                  <a class="nav-link {{selectedContainers.Id === container.Id ? 'active' : '' }}"  data-toggle="pill" href="#v-pills-{{container.Id}}" 
-                    (click)="SelectContainer(container)">{{container.Names[0]}}</a>
+                <div *ngFor="let container of this.connectedHost.Containers; index as i">
+                  <a class="list-group-item list-group-item-action flex-column align-items-start {{selectedContainers.Id === container.Id ? 'active' : '' }}"
+                    data-toggle="pill" href="#v-pills-{{container.Id}}" (click)="SelectContainer(container)">
+                    <h5 class="mb-1">{{container.Names[0].substring(1)}}</h5>
+                    <p class="mb-1">{{container.Image}}</p>
+                    <div class="d-flex w-100 justify-content-between">
+                      <p class="mb-1">{{container.State}}</p>
+                      <small> Port : {{container.Ports[0].PublicPort}} </small>
+                    </div>
+                    <small>{{container.Status}}</small>
+                  </a>
                 </div>
               </div>
             </div>
             <div class="col-10">
-
-
-              <div class="tab-content" >
-                
-                <div class="tab-pane fade {{selectedContainers.Id === container.Id ? 'show active' : '' }}" *ngFor="let container of this.connectedHost.Containers;" >
+              <div class="tab-content">
+                <div class="tab-pane fade {{selectedContainers.Id === container.Id ? 'show active' : '' }}"
+                  *ngFor="let container of this.connectedHost.Containers;">
                   <div class="card bg-dark text-white">
-                    {{ container.Id }}
-                    <h5 class="card-title">System Logs</h5>
-                    <pre><code class="plaintext text-white">
-START GUI WM_LBUTTONDOWN BUTTON BUTTON-1 myprog.p
-START GUI WM_KILLFOCUS FILL-IN FILL-IN-1 myprog.p
-START GUI WM_SETFOCUS BUTTON BUTTON-1 myprog.p
-START GUI WM_LBUTTONUP BUTTON BUTTON-1 myprog.p
-PUSH FOCUS-IN BUTTON BUTTON-1 myprog.p
-PUSH ENTRY BUTTON BUTTON-1 myprog.p
-PUSH LEAVE FILL-IN FILL-IN-1 myprog.p
-Begin-Trigger "LEAVE OF FILL-IN FILL-IN-1" myprog.p
-End-Trigger "LEAVE OF FILL-IN FILL-IN-1" 
-PRGS LEAVE FILL-IN FILL-IN-1 return no-apply
-POP LEAVE FILL-IN FILL-IN-1 myprog.p
-START GUI WM_KILLFOCUS BUTTON BUTTON-1 myprog.p
-START GUI WM_SETFOCUS FILL-IN FILL-IN-1 myprog.p
-PRGS ENTRY BUTTON BUTTON-1 discarded
-POP ENTRY BUTTON BUTTON-1 myprog.p
-PRGS FOCUS-IN BUTTON BUTTON-1 discarded
-POP FOCUS-IN BUTTON BUTTON-1 myprog.p
-                    </code></pre>
+                    <h5 class="card-title">Logs</h5>
+                    <pre><code class="plaintext text-white">{{ logs }}</code></pre>
                   </div>
                 </div>
-              
               </div>
             </div>
           </div>
@@ -164,11 +142,17 @@ POP FOCUS-IN BUTTON BUTTON-1 myprog.p
         </div>
         <div id="Images" class="container tab-pane fade"><br>
           <h3>Image List</h3>
-          <ul >
-            <li *ngFor="let imageItem of this.connectedHost.Images">
-              {{ imageItem.RepoTags[0] }}
-            </li>
-          </ul>
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start"
+              *ngFor="let imageItem of this.connectedHost.Images">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ imageItem.RepoTags[0].split(":")[0] }}</h5>
+                <small> {{ (imageItem.Size / 1024 / 1024 ).toFixed(2) }} MB</small>
+              </div>
+              <p class="mb-1">{{ imageItem.Labels.maintainer }}</p>
+              <small>Version : {{ imageItem.RepoTags[0].split(":")[1] }}</small>
+            </a>
+          </div>
         </div>
       </div>
     </main>
