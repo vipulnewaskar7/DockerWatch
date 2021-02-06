@@ -10,7 +10,8 @@ import { HTTPService } from 'src/Services/HttpService';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'DockerWatchUI';
+
+  addHostModel: Host = new Host("","","","",[],[]);
 
   hosts: Host[];
 
@@ -38,7 +39,6 @@ POP FOCUS-IN BUTTON BUTTON-1 myprog.p`;
   selectedContainers: Container;
 
   constructor(public httpService: HTTPService) {
-
     this.hosts = [
       new Host("1", "Local_Host", "tcp://localhost:2375", "Last updated 3 mins ago", [], [])
     ];
@@ -48,12 +48,24 @@ POP FOCUS-IN BUTTON BUTTON-1 myprog.p`;
     this.GetContainer();
   }
 
+  EditSelectedHost(){
+    this.addHostModel = this.connectedHost;
+  }
+
+  AddNewHost(){
+    this.addHostModel = new Host("","","","",[],[]);
+  }
+
   ConnectHost(host: Host) {
     if (this.connectedHost.Id === host.Id) {
       this.connectedHost = this.defaultHost;
     } else {
       this.connectedHost = host;
     }
+  }
+
+  SaveHost(){
+    
   }
 
   SelectContainer(container: Container) {

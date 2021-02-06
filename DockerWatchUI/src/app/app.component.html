@@ -25,7 +25,9 @@
       <div class="position-sticky pt-3">
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
           <span>Hosts</span>
-          <a class="link-secondary" href="#" aria-label="Add a new report">
+          <a class="link-secondary" href="#" aria-label="Add a new report"
+              data-toggle="modal" data-target="#editHostModel"
+              (click)="AddNewHost()">
             <i class="fa fa-plus" aria-hidden="true"></i>
           </a>
         </h6>
@@ -35,7 +37,6 @@
             <a class="nav-link" href="#">
               <button type="button" style="width: 100%;" (click)="ConnectHost(host)"
                 class="btn {{ host.Id === connectedHost.Id ? 'btn-outline-success' : 'btn-outline-warning' }}">
-
                 <h4>
                   <i class="fa fa-server" aria-hidden="true"></i>
                   &nbsp; {{ host.Name }} <br />
@@ -54,8 +55,20 @@
         <h1 class="h2">Dashboard</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary"
-              (click)="ConnectHost(connectedHost)">Disconnect</button>
+            <button type="button" class="btn btn-sm btn-outline-warning"
+                (click)="EditSelectedHost()"
+                data-toggle="modal" data-target="#editHostModel">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+              &nbsp;Edit
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-danger">
+              <i class="fa fa-trash-o" aria-hidden="true"></i>
+              &nbsp;Delete
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" (click)="ConnectHost(connectedHost)">
+              <i class="fa fa-chain-broken" aria-hidden="true"></i>
+              &nbsp;Disconnect
+            </button>
           </div>
         </div>
       </div>
@@ -100,13 +113,11 @@
             <h4>Containers</h4>
             <div class="btn-toolbar mb-2 mb-md-0">
               <div class="btn-group me-2">
-
-                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">
+                  Export&nbsp;
+                  <i class="fa fa-file-text" aria-hidden="true"></i>
+                </button>
               </div>
-              <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                <i class="fa fa-calendar" aria-hidden="true"></i>
-                This week
-              </button>
             </div>
           </div>
           <div class="row">
@@ -156,5 +167,31 @@
         </div>
       </div>
     </main>
+  </div>
+</div>
+
+<div class="modal fade" id="editHostModel" tabindex="-1" role="dialog" aria-labelledby="editHostModelTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form class="needs-validation" novalidate>
+        <div class="modal-header">
+          <h5 class="modal-title" id="editHostModelTitle">Add Host</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label>Host Name</label>
+          <input type="text" name="name" [(ngModel)]="addHostModel.Name" class="form-control" placeholder="Host Name">
+          <label>Address</label>
+          <input type="text" name="address" [(ngModel)]="addHostModel.Address" class="form-control"
+            placeholder="Address">
+        </div>
+        <div class="modal-footer">
+          <button data-dismiss="modal" class="btn btn-primary" type="button" (click)="SaveHost()">Save</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
