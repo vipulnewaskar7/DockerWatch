@@ -1,160 +1,212 @@
-<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">
-    <img src="assets/image/DWlogo.png" width="60" alt="logo" />
-    &nbsp; Docker Watch</a>
-  <button class="navbar-toggler d-md-none collapsed" type="button" data-bs-toggle="collapse"
-    data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap">
-      <button type="button" class="btn btn-outline-info">
-        <i class="fa fa-info-circle" aria-hidden="true"></i>
-      </button>
-      &nbsp;
-      <button type="button" class="btn btn-outline-danger">
-        <i class="fa fa-sign-out" aria-hidden="true"></i>
-      </button>
-    </li>
-  </ul>
-</header>
-
-<div class="container-fluid">
+<div class="container" *ngIf="login == false">
   <div class="row">
-    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-      <div class="position-sticky pt-3">
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>Hosts</span>
-          <a class="link-secondary" href="#" aria-label="Add a new report">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-          </a>
-        </h6>
-        <br />
-        <ul class="nav flex-column mb-2">
-          <li class="nav-item" *ngFor="let host of hosts">
-            <a class="nav-link" href="#">
-              <button type="button" style="width: 100%;" (click)="ConnectHost(host)"
-                class="btn {{ host.Id === connectedHost.Id ? 'btn-outline-success' : 'btn-outline-warning' }}">
+    <div class="col-md-6">
+      <div class="card">
+        <form class="box">
+          <h1>Login</h1>
+            <p class="text-muted"> Please enter your login and password!</p>
+            <input type="text" name="" placeholder="Username"> <input type="password" name="" placeholder="Password">
+            <input type="button" name="" value="Login" (click)="Login()" />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-                <h4>
-                  <i class="fa fa-server" aria-hidden="true"></i>
-                  &nbsp; {{ host.Name }} <br />
-                </h4>
-                {{ host.Id === connectedHost.Id ? 'Connected' : 'Disconnected' }}
-              </button>
+<div *ngIf="login == true">
+  <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">
+      <img src="assets/image/DWlogo.png" width="60" alt="logo" />
+      &nbsp; Docker Watch</a>
+    <button class="navbar-toggler d-md-none collapsed" type="button" data-bs-toggle="collapse"
+      data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="navbar-nav px-3">
+      <li class="nav-item text-nowrap">
+        <button type="button" class="btn btn-outline-info">
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+        </button>
+        &nbsp;
+        <button type="button" class="btn btn-outline-danger" (click)="Logout()">
+          <i class="fa fa-sign-out" aria-hidden="true"></i>
+        </button>
+      </li>
+    </ul>
+  </header>
+
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="position-sticky pt-3">
+          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>Hosts</span>
+            <a class="link-secondary" href="#" aria-label="Add a new report" data-toggle="modal"
+              data-target="#editHostModel" (click)="AddNewHost()">
+              <i class="fa fa-plus" aria-hidden="true"></i>
             </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 vh-100">
-      <div
-        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-          <div class="btn-group me-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary"
-              (click)="ConnectHost(connectedHost)">Disconnect</button>
-          </div>
+          </h6>
+          <br />
+          <ul class="nav flex-column mb-2">
+            <li class="nav-item" *ngFor="let host of hosts">
+              <a class="nav-link" href="#">
+                <button type="button" style="width: 100%;" (click)="ConnectHost(host)"
+                  class="btn {{ host.Id === connectedHost.Id ? 'btn-outline-success' : 'btn-outline-warning' }}">
+                  <h4>
+                    <i class="fa fa-server" aria-hidden="true"></i>
+                    &nbsp; {{ host.Name }} <br />
+                  </h4>
+                  {{ host.Id === connectedHost.Id ? 'Connected' : 'Disconnected' }}
+                </button>
+              </a>
+            </li>
+          </ul>
         </div>
-      </div>
+      </nav>
 
-      <div class="card-group">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Connected Host</h5>
-            <p class="card-text">{{ connectedHost.Name }}</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Up time</h5>
-            <p class="card-text"><small class="text-muted">{{ connectedHost.Status }}</small></p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Status</h5>
-            <p class="card-text">{{ connectedHost.Id === "-" ? "Disconnected" : "Connected" }}</p>
-          </div>
-        </div>
-      </div>
-      <br>
-
-      <!-- Nav tabs -->
-      <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item">
-          <a class="nav-link active" data-toggle="tab" href="#Containers">Containers</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#Images">Images</a>
-        </li>
-      </ul>
-
-      <!-- Tab panes -->
-      <div class="tab-content">
-        <div id="Containers" class="tab-pane active"><br>
-          <div
-            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h4>Containers</h4>
-            <div class="btn-toolbar mb-2 mb-md-0">
-              <div class="btn-group me-2">
-
-                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-              </div>
-              <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                <i class="fa fa-calendar" aria-hidden="true"></i>
-                This week
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 vh-100">
+        <div
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Dashboard</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+              <button type="button" class="btn btn-sm btn-outline-warning" (click)="EditSelectedHost()"
+                data-toggle="modal" data-target="#editHostModel">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+                &nbsp;Edit
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-danger">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                &nbsp;Delete
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="ConnectHost(connectedHost)">
+                <i class="fa fa-chain-broken" aria-hidden="true"></i>
+                &nbsp;Disconnect
               </button>
             </div>
           </div>
-          <div class="row">
-            <div class="col-2">
-              <div class="nav flex-column nav-pills" aria-orientation="vertical">
-                <div *ngFor="let container of this.connectedHost.Containers; index as i">
-                  <a class="list-group-item list-group-item-action flex-column align-items-start {{selectedContainers.Id === container.Id ? 'active' : '' }}"
-                    data-toggle="pill" href="#v-pills-{{container.Id}}" (click)="SelectContainer(container)">
-                    <h5 class="mb-1">{{container.Names[0].substring(1)}}</h5>
-                    <p class="mb-1">{{container.Image}}</p>
-                    <div class="d-flex w-100 justify-content-between">
-                      <p class="mb-1">{{container.State}}</p>
-                      <small> Port : {{container.Ports[0].PublicPort}} </small>
-                    </div>
-                    <small>{{container.Status}}</small>
-                  </a>
+        </div>
+
+        <div class="card-group">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Connected Host</h5>
+              <p class="card-text">{{ connectedHost.Name }}</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Up time</h5>
+              <p class="card-text"><small class="text-muted">{{ connectedHost.Status }}</small></p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Status</h5>
+              <p class="card-text">{{ connectedHost.Id === "-" ? "Disconnected" : "Connected" }}</p>
+            </div>
+          </div>
+        </div>
+        <br>
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#Containers">Containers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Images">Images</a>
+          </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div id="Containers" class="tab-pane active"><br>
+            <div
+              class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+              <h4>Containers</h4>
+              <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group me-2">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">
+                    Export&nbsp;
+                    <i class="fa fa-file-text" aria-hidden="true"></i>
+                  </button>
                 </div>
               </div>
             </div>
-            <div class="col-10">
-              <div class="tab-content">
-                <div class="tab-pane fade {{selectedContainers.Id === container.Id ? 'show active' : '' }}"
-                  *ngFor="let container of this.connectedHost.Containers;">
-                  <div class="card bg-dark text-white">
-                    <h5 class="card-title">Logs</h5>
-                    <pre><code class="plaintext text-white">{{ logs }}</code></pre>
+            <div class="row">
+              <div class="col-2">
+                <div class="nav flex-column nav-pills" aria-orientation="vertical">
+                  <div *ngFor="let container of this.connectedHost.Containers; index as i">
+                    <a class="list-group-item list-group-item-action flex-column align-items-start {{selectedContainers.Id === container.Id ? 'active' : '' }}"
+                      data-toggle="pill" href="#v-pills-{{container.Id}}" (click)="SelectContainer(container)">
+                      <h5 class="mb-1">{{container.Names[0].substring(1)}}</h5>
+                      <p class="mb-1">{{container.Image}}</p>
+                      <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1">{{container.State}}</p>
+                        <small> Port : {{container.Ports[0].PublicPort}} </small>
+                      </div>
+                      <small>{{container.Status}}</small>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-10">
+                <div class="tab-content">
+                  <div class="tab-pane fade {{selectedContainers.Id === container.Id ? 'show active' : '' }}"
+                    *ngFor="let container of this.connectedHost.Containers;">
+                    <div class="card bg-dark text-white">
+                      <h5 class="card-title">Logs</h5>
+                      <pre><code class="plaintext text-white">{{ logs }}</code></pre>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-        </div>
-        <div id="Images" class="container tab-pane fade"><br>
-          <h3>Image List</h3>
-          <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start"
-              *ngFor="let imageItem of this.connectedHost.Images">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{ imageItem.RepoTags[0].split(":")[0] }}</h5>
-                <small> {{ (imageItem.Size / 1024 / 1024 ).toFixed(2) }} MB</small>
-              </div>
-              <p class="mb-1">{{ imageItem.Labels.maintainer }}</p>
-              <small>Version : {{ imageItem.RepoTags[0].split(":")[1] }}</small>
-            </a>
+          </div>
+          <div id="Images" class="container tab-pane fade"><br>
+            <h3>Image List</h3>
+            <div class="list-group">
+              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start"
+                *ngFor="let imageItem of this.connectedHost.Images">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">{{ imageItem.RepoTags[0].split(":")[0] }}</h5>
+                  <small> {{ (imageItem.Size / 1024 / 1024 ).toFixed(2) }} MB</small>
+                </div>
+                <p class="mb-1">{{ imageItem.Labels.maintainer }}</p>
+                <small>Version : {{ imageItem.RepoTags[0].split(":")[1] }}</small>
+              </a>
+            </div>
           </div>
         </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal fade" id="editHostModel" tabindex="-1" role="dialog" aria-labelledby="editHostModelTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <form class="needs-validation" novalidate>
+          <div class="modal-header">
+            <h5 class="modal-title" id="editHostModelTitle">Add Host</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label>Host Name</label>
+            <input type="text" name="name" [(ngModel)]="addHostModel.Name" class="form-control" placeholder="Host Name">
+            <label>Address</label>
+            <input type="text" name="address" [(ngModel)]="addHostModel.Address" class="form-control"
+              placeholder="Address">
+          </div>
+          <div class="modal-footer">
+            <button data-dismiss="modal" class="btn btn-primary" type="button" (click)="SaveHost()">Save</button>
+          </div>
+        </form>
       </div>
-    </main>
+    </div>
   </div>
 </div>

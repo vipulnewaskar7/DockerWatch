@@ -3,6 +3,7 @@ import { Container } from 'src/Model/Container';
 import { Image } from 'src/Model/Image';
 import { Host } from 'src/Model/Host';
 import { HTTPService } from 'src/Services/HttpService';
+import { WebSocketAPI } from './WebSocketAPI';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,9 @@ import { HTTPService } from 'src/Services/HttpService';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'DockerWatchUI';
+  login: boolean = false;
+
+  addHostModel: Host = new Host("","","","",[],[]);
 
   hosts: Host[];
 
@@ -37,15 +40,42 @@ POP FOCUS-IN BUTTON BUTTON-1 myprog.p`;
 
   selectedContainers: Container;
 
-  constructor(public httpService: HTTPService) {
+  webSocketAPI: WebSocketAPI;
+  
+  connect(){
+    this.webSocketAPI._connect();
+  }
 
+  disconnect(){
+    this.webSocketAPI._disconnect();
+  }
+
+  sendMessage(){
+    this.webSocketAPI._send("something");
+  }
+
+  handleMessage(message: any){
+    console.log(message);
+  }
+
+  constructor(public httpService: HTTPService) {
     this.hosts = [
       new Host("1", "Local_Host", "tcp://localhost:2375", "Last updated 3 mins ago", [], [])
     ];
     this.connectedHost = this.hosts[0];
     this.selectedContainers = this.connectedHost.Containers[0];
-    this.GetImages();
-    this.GetContainer();
+    //this.GetImages();
+    //this.GetContainer();
+    this.webSocketAPI = new WebSocketAPI(this);
+    this.connect();
+  }
+
+  EditSelectedHost(){
+    this.addHostModel = this.connectedHost;
+  }
+
+  AddNewHost(){
+    this.addHostModel = new Host("","","","",[],[]);
   }
 
   ConnectHost(host: Host) {
@@ -54,6 +84,19 @@ POP FOCUS-IN BUTTON BUTTON-1 myprog.p`;
     } else {
       this.connectedHost = host;
     }
+  }
+
+  SaveHost(){
+    
+  }
+
+  Login(){
+    this.sendMessage();
+    //this.login = true;
+  }
+
+  Logout(){
+    this.login = false;
   }
 
   SelectContainer(container: Container) {
