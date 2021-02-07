@@ -31,10 +31,4 @@ public class HomeController {
         return service.getContainers();
     }
 
-    // TODO: WebSocket implementation
-    @RequestMapping(value = "/{container}/logs", method = RequestMethod.GET)
-    @CrossOrigin(origins = "*")
-    public String tailLogs(@RequestParam("container") String container) {
-        return "";
-    }
 }

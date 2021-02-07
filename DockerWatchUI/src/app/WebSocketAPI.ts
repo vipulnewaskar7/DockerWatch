@@ -3,8 +3,8 @@ import * as SockJS from 'sockjs-client';
 import { AppComponent } from './app.component';
 
 export class WebSocketAPI {
-    webSocketEndPoint: string = 'http://localhost:8080/ws';
-    topic: string = "/topic/greetings";
+    webSocketEndPoint: string = 'http://localhost:8080/logs/';
+    topic: string = "/subscribe/logs";
     stompClient: any;
     app: AppComponent;
     constructor(app: AppComponent){
@@ -41,11 +41,11 @@ export class WebSocketAPI {
 
 	/**
 	 * Send message to sever via web socket
-	 * @param {*} message 
+	 * @param {*} message
 	 */
     _send(message: any) {
         console.log("calling logout api via web socket");
-        this.stompClient.send("/app/hello", {}, JSON.stringify(message));
+        this.stompClient.send("/containerslogs", {}, JSON.stringify(message));
     }
 
     onMessageReceived(message: any) {
