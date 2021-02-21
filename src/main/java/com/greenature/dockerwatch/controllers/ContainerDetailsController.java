@@ -32,7 +32,7 @@ public class ContainerDetailsController implements WebSocketMessageBrokerConfigu
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/logs").setAllowedOrigins("*").withSockJS();
-        service.tailLogs();
+        //service.tailLogs();
     }
 
 }

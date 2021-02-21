@@ -26,8 +26,15 @@ public class DockerService {
     private SimpMessagingTemplate simpMessagingTemplate;
 
     public List<Image> getImages() {
+        return getImages("tcp://localhost:2375");
+    }
+
+    public List<Image> getImages(String url) {
+        if (!url.startsWith("tcp://")) {
+            url = "tcp://".concat(url);
+        }
         DockerClientConfig custom = DefaultDockerClientConfig.createDefaultConfigBuilder()
-                .withDockerHost("tcp://localhost:2375")
+                .withDockerHost(url)
                 .withDockerTlsVerify(false)
                 .build();
         DockerHttpClient httpClient = new ApacheDockerHttpClient.Builder()
@@ -52,6 +59,26 @@ public class DockerService {
         return dockerClient.listContainersCmd().exec();
     }
 
+
+    public List<Container> getContainers(String url) {
+        if (!url.startsWith("tcp://")) {
+            url = "tcp://".concat(url);
+        }
+        DockerClientConfig custom = DefaultDockerClientConfig.createDefaultConfigBuilder()
+                .withDockerHost(url)
+                .withDockerTlsVerify(false)
+                .build();
+        DockerHttpClient httpClient = new ApacheDockerHttpClient.Builder()
+                .dockerHost(custom.getDockerHost())
+                .sslConfig(custom.getSSLConfig())
+                .build();
+        DockerClient dockerClient = DockerClientImpl.getInstance(custom, httpClient);
+        // return all containers running without processing anything
+        return dockerClient.listContainersCmd().exec();
+    }
+
+
+
     public String tailLogs() {
         DockerClientConfig custom = DefaultDockerClientConfig.createDefaultConfigBuilder()
                 .withDockerHost("tcp://localhost:2375")
@@ -65,7 +92,7 @@ public class DockerService {
         List<Container> containers = dockerClient.listContainersCmd().exec();
 
         String containerId = containers.get(0).getId();
-
+        //TODO: Handle NPT
         CompletableFuture.runAsync(() -> {
             if (null == containerId) {
                 try {
@@ -87,20 +114,6 @@ public class DockerService {
                 }
             });
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //TODO: get inputStream and forward it to WebSocket
         return "";
     }
 
