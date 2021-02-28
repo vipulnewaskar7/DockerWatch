@@ -1,5 +1,3 @@
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -13,8 +11,7 @@ export class HTTPService {
         return this.http.get<T>(url);
     }
 
-    post<T>(url: string) {
-        return this.http.get<T>(url);
-        
+    post<T>(url: string, body: any) {
+        return this.http.post(url, body);
     }
 }

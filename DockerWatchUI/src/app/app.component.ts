@@ -90,11 +90,6 @@ POP FOCUS-IN BUTTON BUTTON-1 myprog.p`;
     
   }
 
-  Login(){
-    this.sendMessage();
-    //this.login = true;
-  }
-
   Logout(){
     this.login = false;
   }

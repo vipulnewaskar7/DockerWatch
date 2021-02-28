@@ -1,16 +1,5 @@
 <div class="container" *ngIf="login == false">
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card">
-        <form class="box">
-          <h1>Login</h1>
-            <p class="text-muted"> Please enter your login and password!</p>
-            <input type="text" name="" placeholder="Username"> <input type="password" name="" placeholder="Password">
-            <input type="button" name="" value="Login" (click)="Login()" />
-        </form>
-      </div>
-    </div>
-  </div>
+  <app-login [(login)]="login"></app-login>
 </div>
 
 <div *ngIf="login == true">
