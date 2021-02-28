@@ -113,7 +113,7 @@ Response:
 ```
 
 
-## api/savehost
+## api/savehost - POST
 
 Request:
 ```
@@ -139,7 +139,7 @@ Response:
   }
 }
 ```
-## api/login
+## api/login - POST
 
 Request:
 ```
@@ -166,7 +166,7 @@ Response:
 }
 ```
 
-## api/updatehost
+## api/updatehost - POST
 
 Request:
 ```
@@ -194,7 +194,7 @@ Response:
 }
 ```
 
-## api/deletehost
+## api/deletehost - POST
 ```
 Request:
 {
@@ -221,7 +221,7 @@ Response:
 }
 ```
 
-## Get All Hosts
+## api/getallhosts - Post
 
 Request:
 ```
