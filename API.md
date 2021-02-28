@@ -228,12 +228,7 @@ Request:
 {
   "requestid":"uuid",
   "user":"someone",
-  "time":"timestamp with timezone",
-  "message":{
-	"id":"uuid",
-	"name":"something",
-	"address":"somewhere",
-  }
+  "time":"timestamp with timezone"
 }
 ```
 
