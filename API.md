@@ -244,19 +244,16 @@ Response:
              "id":"uuid",
 	     "name":"something",
 	     "address":"somewhere",
-             "status":"connected"
            },
            {
              "id":"uuid",
 	     "name":"something",
 	     "address":"somewhere",
-             "status":"disconnected"
            },
            {
              "id":"uuid",
 	     "name":"something",
 	     "address":"somewhere",
-             "status":"disconnected"
            }
         ]
   }
