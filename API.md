@@ -113,7 +113,60 @@ Response:
 ```
 
 
-## api/savehost
+## api/savehost - POST
+
+Request:
+```
+{
+  "requestid":"uuid",
+  "user":"someone",
+  "time":"timestamp with timezone",
+  "message":{
+	"name":"something",
+	"address":"somewhere",
+  }
+}
+```
+
+Response:
+```
+{
+  "requestid":"uuid",
+  "user":"someone",
+  "time":"timestamp with timezone",
+  "message":{
+	"status":"success"
+  }
+}
+```
+## api/login - POST
+
+Request:
+```
+{
+    "requestid":"123",
+    "user":"default",
+    "message":{
+        "username":"default",
+        "password":"Rahul@123"
+    }
+}
+```
+
+Response:
+```
+{
+   "requestid":"123",
+   "user":"default",
+   "timestamp":1614514811,
+   "message":{
+      "status":"success",
+      "message":"User Logged In"
+   }
+}
+```
+
+## api/updatehost - POST
 
 Request:
 ```
@@ -141,35 +194,7 @@ Response:
 }
 ```
 
-## api/updatehost
-
-Request:
-```
-{
-  "requestid":"uuid",
-  "user":"someone",
-  "time":"timestamp with timezone",
-  "message":{
-	"id":"uuid",
-	"name":"something",
-	"address":"somewhere",
-  }
-}
-```
-
-Response:
-```
-{
-  "requestid":"uuid",
-  "user":"someone",
-  "time":"timestamp with timezone",
-  "message":{
-	"status":"success"
-  }
-}
-```
-
-## api/deletehost
+## api/deletehost - POST
 ```
 Request:
 {
@@ -196,19 +221,14 @@ Response:
 }
 ```
 
-## Get All Hosts
+## api/getallhosts - Post
 
 Request:
 ```
 {
   "requestid":"uuid",
   "user":"someone",
-  "time":"timestamp with timezone",
-  "message":{
-	"id":"uuid",
-	"name":"something",
-	"address":"somewhere",
-  }
+  "time":"timestamp with timezone"
 }
 ```
 
