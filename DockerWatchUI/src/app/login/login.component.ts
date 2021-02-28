@@ -14,12 +14,15 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
 
-  constructor(public httpService: HTTPService) { }
+  constructor(public httpService: HTTPService) {
+
+  }
 
   ngOnInit(): void { }
 
   onLogin(){
     //this.httpService.post("","");
+    localStorage.setItem('isLoggedIn', "true"); 
     this.login = true;
     this.loginChange.emit(this.login);
   }

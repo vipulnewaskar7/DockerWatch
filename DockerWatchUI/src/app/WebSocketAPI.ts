@@ -1,13 +1,14 @@
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import { AppComponent } from './app.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
 
 export class WebSocketAPI {
     webSocketEndPoint: string = 'http://localhost:8080/logs/';
     topic: string = "/subscribe/logs";
     stompClient: any;
-    app: AppComponent;
-    constructor(app: AppComponent){
+    app: DashboardComponent;
+    constructor(app: DashboardComponent){
         this.app = app;
     }
 
