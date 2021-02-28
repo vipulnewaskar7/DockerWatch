@@ -35,12 +35,12 @@
             <li class="nav-item" *ngFor="let host of hosts">
               <a class="nav-link" href="#">
                 <button type="button" style="width: 100%;" (click)="ConnectHost(host)"
-                  class="btn {{ host.Id === connectedHost.Id ? 'btn-outline-success' : 'btn-outline-warning' }}">
+                  class="btn {{ host.id === connectedHost.id ? 'btn-outline-success' : 'btn-outline-warning' }}">
                   <h4>
                     <i class="fa fa-server" aria-hidden="true"></i>
-                    &nbsp; {{ host.Name }} <br />
+                    &nbsp; {{ host.name }} <br />
                   </h4>
-                  {{ host.Id === connectedHost.Id ? 'Connected' : 'Disconnected' }}
+                  {{ host.id === connectedHost.id ? 'Connected' : 'Disconnected' }}
                 </button>
               </a>
             </li>
@@ -75,19 +75,19 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Connected Host</h5>
-              <p class="card-text">{{ connectedHost.Name }}</p>
+              <p class="card-text">{{ connectedHost.name }}</p>
             </div>
           </div>
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Up time</h5>
-              <p class="card-text"><small class="text-muted">{{ connectedHost.Status }}</small></p>
+              <p class="card-text"><small class="text-muted">{{ connectedHost.status }}</small></p>
             </div>
           </div>
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Status</h5>
-              <p class="card-text">{{ connectedHost.Id === "-" ? "Disconnected" : "Connected" }}</p>
+              <p class="card-text">{{ connectedHost.id === "-" ? "Disconnected" : "Connected" }}</p>
             </div>
           </div>
         </div>
@@ -181,9 +181,9 @@
           </div>
           <div class="modal-body">
             <label>Host Name</label>
-            <input type="text" name="name" [(ngModel)]="addHostModel.Name" class="form-control" placeholder="Host Name">
+            <input type="text" name="name" [(ngModel)]="addHostModel.name" class="form-control" placeholder="Host Name">
             <label>Address</label>
-            <input type="text" name="address" [(ngModel)]="addHostModel.Address" class="form-control"
+            <input type="text" name="address" [(ngModel)]="addHostModel.address" class="form-control"
               placeholder="Address">
           </div>
           <div class="modal-footer">

@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
     let request = new MessagePattern<UserDetails>(this.userDetails);
     let response = this.httpService.post<MessagePattern<MessageStatus>>("https://rahul.jedhe.in/api/dockerwatch/login.php", request);
     response.then(data => {
-      console.log(data);
       if(data.message.status.includes("success")){
         localStorage.setItem('user', this.userDetails.username ); 
         localStorage.setItem('isLoggedIn', "true");

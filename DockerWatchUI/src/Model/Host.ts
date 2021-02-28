@@ -1,20 +1,24 @@
 import {Image} from './Image';
 import {Container} from './Container';
 
-export class Host {
-    Id: string;
-    Name: string;
-    Address: string;
-    Status: string;
+export class HostBase {
+  id: string;
+  name: string;
+  address: string;
+}
+
+export class Host extends HostBase{
+    status: string;
     Images: Image[];
     Containers: Container[];
   
     constructor(id: string, name: string, address: string, status: string, images: Image[], containers:Container[]) {
-      this.Id = id;
-      this.Name = name;
-      this.Address = address;
-      this.Status = status;
-      this.Images=images;
+      super();
+      this.id = id;
+      this.name = name;
+      this.address = address;
+      this.status = status;
+      this.Images = images;
       this.Containers = containers;
     }
   }

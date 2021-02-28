@@ -17,6 +17,7 @@ export class AppComponent {
     } else {
       this.login = false;
     }
+    localStorage.setItem('isLoggedIn','' + this.login);
     
   }
 

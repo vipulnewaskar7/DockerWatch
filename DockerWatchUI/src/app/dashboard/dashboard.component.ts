@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HTTPService } from 'src/Services/HttpService';
 import { Image } from 'src/Model/Image';
-import { Host } from 'src/Model/Host';
+import { Host, HostBase } from 'src/Model/Host';
 import { WebSocketAPI } from '../WebSocketAPI';
 import { Container } from 'src/Model/Container';
+import { MessagePattern } from 'src/Model/MessagePattern';
+import { MessageStatus } from 'src/Model/MessageStatus';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,6 +21,12 @@ export class DashboardComponent implements OnInit {
     this.hosts = [
       new Host("1", "Local_Host", "tcp://localhost:2375", "Last updated 3 mins ago", [], [])
     ];
+    let request = new MessagePattern<any>(null);
+    let response = this.httpService.post<MessagePattern<HostBase[]>>("https://rahul.jedhe.in/api/dockerwatch/getallhosts.php", request);
+    response.then(data => {
+      console.log(data);
+    });
+
     this.connectedHost = this.hosts[0];
     this.selectedContainers = this.connectedHost.Containers[0];
     //this.GetImages();
@@ -31,7 +39,7 @@ export class DashboardComponent implements OnInit {
   }
 
   
-  addHostModel: Host = new Host("","","","",[],[]);
+  addHostModel: HostBase = new HostBase();
 
   hosts: Host[];
 
@@ -85,7 +93,7 @@ POP FOCUS-IN BUTTON BUTTON-1 myprog.p`;
   }
 
   ConnectHost(host: Host) {
-    if (this.connectedHost.Id === host.Id) {
+    if (this.connectedHost.id === host.id) {
       this.connectedHost = this.defaultHost;
     } else {
       this.connectedHost = host;
@@ -93,11 +101,16 @@ POP FOCUS-IN BUTTON BUTTON-1 myprog.p`;
   }
 
   SaveHost(){
-    
+    let request = new MessagePattern<HostBase>(this.addHostModel);
+    let response = this.httpService.post<MessagePattern<MessageStatus>>("https://rahul.jedhe.in/api/dockerwatch/savehost.php", request);
+    response.then(data => {
+      console.log(data);
+    });
   }
 
   Logout(){
-    localStorage.setItem('isLoggedIn', "false"); 
+    localStorage.setItem('user', "default" ); 
+    localStorage.setItem('isLoggedIn', "false");
     this.login = false;
     this.loginChange.emit(this.login);
   }
