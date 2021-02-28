@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { resourceLimits } from 'worker_threads';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ export class HTTPService {
         return this.http.get<T>(url);
     }
 
-    post<T>(url: string, body: any) {
-        return this.http.post(url, body);
+    async post<T>(url: string, body: any) {
+        return this.http.post<T>(url, body).toPromise();
     }
 }

@@ -10,12 +10,14 @@ export class AppComponent {
   login: boolean;
 
   constructor(){
-    var res = localStorage.getItem('isLoggedIn');
-    if(res != null && res.includes("true")){
+    var isLoggedIn = localStorage.getItem('isLoggedIn');
+    
+    if(isLoggedIn != null && isLoggedIn.includes("true")){
       this.login = true;
     } else {
       this.login = false;
     }
+    
   }
 
 }
