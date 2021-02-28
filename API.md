@@ -140,6 +140,32 @@ Response:
   }
 }
 ```
+## api/login
+
+Request:
+```
+{
+    "requestid":"123",
+    "user":"default",
+    "message":{
+        "username":"default",
+        "password":"Rahul@123"
+    }
+}
+```
+
+Response:
+```
+{
+   "requestid":"123",
+   "user":"default",
+   "timestamp":1614514811,
+   "message":{
+      "status":"success",
+      "message":"User Logged In"
+   }
+}
+```
 
 ## api/updatehost
 
