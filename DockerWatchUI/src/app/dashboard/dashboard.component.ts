@@ -3,6 +3,7 @@ import { HTTPService } from 'src/Services/HttpService';
 import { Host } from 'src/Model/Host';
 import { MessagePattern } from 'src/Model/MessagePattern';
 import { DashboardContext } from 'src/Model/DashboardContext';
+import { AppConfig } from '../app.config';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,10 +25,9 @@ export class DashboardComponent implements OnInit {
 
   Initialize(){
     let request = new MessagePattern<any>(null);
-    let response = this.httpService.post<MessagePattern<Host[]>>("https://rahul.jedhe.in/api/dockerwatch/getallhosts.php", request);
+    let response = this.httpService.post<MessagePattern<Host[]>>(AppConfig.Address.GetAllHost, request);
     response.then(data => {
       this.DataContext.hosts = data.message;
-      console.log(JSON.stringify(this.DataContext.hosts));
     });
   }
 

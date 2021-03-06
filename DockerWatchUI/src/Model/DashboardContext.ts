@@ -4,7 +4,8 @@ import { Host } from './Host';
 import { HTTPService } from 'src/Services/HttpService';
 import { MessagePattern } from './MessagePattern';
 import { MessageStatus } from './MessageStatus';
-import { stat } from 'fs';
+import { HostLogs } from './HostLogs';
+import { AppConfig } from 'src/app/app.config';
 
 export class DashboardContext{
     hosts: Host[];
@@ -29,14 +30,20 @@ export class DashboardContext{
     }
 
     ConnectHost(host: Host){
-      if (this.selectedHost.id === host.id) {
-        host.DisconnectHost(host);
+      if (this.selectedHost && this.selectedHost.id === host.id) {
+        HostLogs.DisconnectHost();
+        this.logs = "";
       } else {
-        host.ConnectHost();
         this.selectedHost = host;
+        this.logs = "";
+        HostLogs.ConnectHost(this.UpdateLogs);
+        //this.GetContainer();
+        //this.GetImages();
       }
     }
-
+    UpdateLogs(message: any){
+      this.logs += message;
+    }
     EditSelectedHost(){
       this.EditBoxHost = this.selectedHost;
     }
@@ -47,7 +54,7 @@ export class DashboardContext{
 
     SaveHost(){
       let request = new MessagePattern<Host>(this.EditBoxHost);
-      let response = this.httpService.post<MessagePattern<MessageStatus>>("https://rahul.jedhe.in/api/dockerwatch/savehost.php", request);
+      let response = this.httpService.post<MessagePattern<MessageStatus>>(AppConfig.Address.SaveHost, request);
       response.then(data => {
         console.log(data);
       });
@@ -58,14 +65,14 @@ export class DashboardContext{
     }
   
     async GetImages() {
-      this.httpService.get<Image[]>("http://localhost:8080/api/v1/images").subscribe(images => {
+      this.httpService.get<Image[]>(AppConfig.Address.GetImages).subscribe(images => {
         console.log(JSON.stringify(images));
         this.Images = images;
       });
     }
   
     async GetContainer() {
-      this.httpService.get<Container[]>("http://localhost:8080/api/v1/containers").subscribe(containers => {
+      this.httpService.get<Container[]>(AppConfig.Address.GetContainers).subscribe(containers => {
         console.log(JSON.stringify(containers));
         this.Containers = containers;
         this.selectedContainer = this.Containers[0];

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { resourceLimits } from 'worker_threads';
 
 @Injectable({
     providedIn: 'root'
