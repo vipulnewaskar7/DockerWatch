@@ -1,24 +1,32 @@
-import {Image} from './Image';
-import {Container} from './Container';
+import { WebSocketAPI } from "src/app/WebSocketAPI";
 
-export class HostBase {
+export class Host {
   id: string;
   name: string;
   address: string;
-}
+  status: string;
 
-export class Host extends HostBase{
-    status: string;
-    Images: Image[];
-    Containers: Container[];
-  
-    constructor(id: string, name: string, address: string, status: string, images: Image[], containers:Container[]) {
-      super();
-      this.id = id;
-      this.name = name;
-      this.address = address;
-      this.status = status;
-      this.Images = images;
-      this.Containers = containers;
-    }
+  webSocketAPI: WebSocketAPI;
+
+  GetLogs(){
+    this.webSocketAPI = new WebSocketAPI(this.handleMessage);
   }
+
+  DisconnectHost(host:Host){
+    //this.DataContext.selectedHost = null;
+    this.webSocketAPI._disconnect();
+  }
+
+  
+  ConnectHost(){
+    this.webSocketAPI._connect();
+  }
+
+  SendMessage(msg: any){
+    this.webSocketAPI._send(msg);
+  }
+
+  handleMessage(message: any){
+    console.log(message);
+  }
+}

@@ -21,40 +21,42 @@
 
   <div class="container-fluid">
     <div class="row">
+
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
         <div class="position-sticky pt-3">
           <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
             <span>Hosts</span>
             <a class="link-secondary" href="#" aria-label="Add a new report" data-toggle="modal"
-              data-target="#editHostModel" (click)="AddNewHost()">
+              data-target="#editHostModel" (click)="DataContext.AddNewHost()">
               <i class="fa fa-plus" aria-hidden="true"></i>
             </a>
           </h6>
           <br />
-          <ul class="nav flex-column mb-2">
-            <li class="nav-item" *ngFor="let host of hosts">
-              <a class="nav-link" href="#">
-                <button type="button" style="width: 100%;" (click)="ConnectHost(host)"
-                  class="btn {{ host.id === connectedHost.id ? 'btn-outline-success' : 'btn-outline-warning' }}">
-                  <h4>
-                    <i class="fa fa-server" aria-hidden="true"></i>
-                    &nbsp; {{ host.name }} <br />
-                  </h4>
-                  {{ host.id === connectedHost.id ? 'Connected' : 'Disconnected' }}
-                </button>
-              </a>
+          <ul class="nav flex-column mb-2" >
+            <li class="nav-item" *ngFor="let host of DataContext.hosts">
+            <button type="button" style="width: 100%;" (click)="DataContext.ConnectHost(host)"
+            class="btn {{ (DataContext.selectedHost && host.id === DataContext.selectedHost.id) ? 'btn-outline-success' : 'btn-outline-warning' }}">
+              <h4>
+                <i class="fa fa-server" aria-hidden="true"></i>
+                &nbsp; {{ host.name }} <br />
+              </h4>
+              {{ (DataContext.selectedHost && host.id === DataContext.selectedHost.id) ? 'Connected' : 'Disconnected' }}
+            </button>
             </li>
           </ul>
         </div>
       </nav>
 
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 vh-100">
+      <div *ngIf="!DataContext.selectedHost">
+        <h1 class="container h2">Host Not Selected</h1>
+      </div>
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 vh-100" *ngIf="DataContext.selectedHost">
         <div
           class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2">Dashboard</h1>
           <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
-              <button type="button" class="btn btn-sm btn-outline-warning" (click)="EditSelectedHost()"
+              <button type="button" class="btn btn-sm btn-outline-warning" (click)="DataContext.EditSelectedHost()"
                 data-toggle="modal" data-target="#editHostModel">
                 <i class="fa fa-pencil" aria-hidden="true"></i>
                 &nbsp;Edit
@@ -63,7 +65,7 @@
                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                 &nbsp;Delete
               </button>
-              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="ConnectHost(connectedHost)">
+              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="DataContext.ConnectHost(DataContext.selectedHost)">
                 <i class="fa fa-chain-broken" aria-hidden="true"></i>
                 &nbsp;Disconnect
               </button>
@@ -75,19 +77,23 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Connected Host</h5>
-              <p class="card-text">{{ connectedHost.name }}</p>
+              <p class="card-text">
+                {{ DataContext.selectedHost.name }}
+              </p>
             </div>
           </div>
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Up time</h5>
-              <p class="card-text"><small class="text-muted">{{ connectedHost.status }}</small></p>
+              <p class="card-text">
+                <small class="text-muted">{{ DataContext.selectedHost.status }}</small>
+              </p>
             </div>
           </div>
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Status</h5>
-              <p class="card-text">{{ connectedHost.id === "-" ? "Disconnected" : "Connected" }}</p>
+              <p class="card-text">{{ DataContext.selectedHost.id ? "Connected" : "Disconnected" }}</p>
             </div>
           </div>
         </div>
@@ -121,9 +127,9 @@
             <div class="row">
               <div class="col-2">
                 <div class="nav flex-column nav-pills" aria-orientation="vertical">
-                  <div *ngFor="let container of this.connectedHost.Containers; index as i">
-                    <a class="list-group-item list-group-item-action flex-column align-items-start {{selectedContainers.Id === container.Id ? 'active' : '' }}"
-                      data-toggle="pill" href="#v-pills-{{container.Id}}" (click)="SelectContainer(container)">
+                  <div *ngFor="let container of DataContext.Containers; index as i">
+                    <a class="list-group-item list-group-item-action flex-column align-items-start {{DataContext.selectedContainer.Id === container.Id ? 'active' : '' }}"
+                      data-toggle="pill" href="#v-pills-{{container.Id}}" (click)="DataContext.SelectContainer(container)">
                       <h5 class="mb-1">{{container.Names[0].substring(1)}}</h5>
                       <p class="mb-1">{{container.Image}}</p>
                       <div class="d-flex w-100 justify-content-between">
@@ -137,11 +143,11 @@
               </div>
               <div class="col-10">
                 <div class="tab-content">
-                  <div class="tab-pane fade {{selectedContainers.Id === container.Id ? 'show active' : '' }}"
-                    *ngFor="let container of this.connectedHost.Containers;">
+                  <div class="tab-pane fade {{DataContext.selectedContainer.Id === container.Id ? 'show active' : '' }}"
+                    *ngFor="let container of DataContext.Containers;">
                     <div class="card bg-dark text-white">
                       <h5 class="card-title">Logs</h5>
-                      <pre><code class="plaintext text-white">{{ logs }}</code></pre>
+                      <pre><code class="plaintext text-white">{{ DataContext.logs }}</code></pre>
                     </div>
                   </div>
                 </div>
@@ -153,7 +159,7 @@
             <h3>Image List</h3>
             <div class="list-group">
               <a href="#" class="list-group-item list-group-item-action flex-column align-items-start"
-                *ngFor="let imageItem of this.connectedHost.Images">
+                *ngFor="let imageItem of DataContext.Images">
                 <div class="d-flex w-100 justify-content-between">
                   <h5 class="mb-1">{{ imageItem.RepoTags[0].split(":")[0] }}</h5>
                   <small> {{ (imageItem.Size / 1024 / 1024 ).toFixed(2) }} MB</small>
@@ -181,13 +187,13 @@
           </div>
           <div class="modal-body">
             <label>Host Name</label>
-            <input type="text" name="name" [(ngModel)]="addHostModel.name" class="form-control" placeholder="Host Name">
+            <input type="text" name="name" [(ngModel)]="DataContext.EditBoxHost.name" class="form-control" placeholder="Host Name">
             <label>Address</label>
-            <input type="text" name="address" [(ngModel)]="addHostModel.address" class="form-control"
+            <input type="text" name="address" [(ngModel)]="DataContext.EditBoxHost.address" class="form-control"
               placeholder="Address">
           </div>
           <div class="modal-footer">
-            <button data-dismiss="modal" class="btn btn-primary" type="button" (click)="SaveHost()">Save</button>
+            <button data-dismiss="modal" class="btn btn-primary" type="button" (click)="DataContext.SaveHost()">Save</button>
           </div>
         </form>
       </div>

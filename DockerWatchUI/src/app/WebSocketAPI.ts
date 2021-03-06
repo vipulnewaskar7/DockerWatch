@@ -1,15 +1,16 @@
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { Host } from '@angular/core';
 
 
 export class WebSocketAPI {
     webSocketEndPoint: string = 'http://localhost:8080/logs/';
     topic: string = "/subscribe/logs";
     stompClient: any;
-    app: DashboardComponent;
-    constructor(app: DashboardComponent){
-        this.app = app;
+    fn: Function;
+    constructor(fn: Function){
+        this.fn = fn;
     }
 
     _connect() {
@@ -51,6 +52,6 @@ export class WebSocketAPI {
 
     onMessageReceived(message: any) {
         console.log("Message Recieved from Server :: " + message);
-        this.app.handleMessage(message);
+        this.fn(message);
     }
 }
