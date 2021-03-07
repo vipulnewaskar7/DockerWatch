@@ -1,6 +1,7 @@
 package com.greenature.dockerwatch.controllers;
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.github.dockerjava.api.model.Container;
 import com.github.dockerjava.api.model.Image;
 import com.greenature.dockerwatch.model.Host;
@@ -13,6 +14,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 public class HomeController {
+
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+
     @Autowired
     DockerService service;
 
@@ -30,9 +34,11 @@ public class HomeController {
     }
 
 
-    @RequestMapping(value = "/images", method = RequestMethod.GET )
+    @RequestMapping(value = "/images", method = RequestMethod.POST )
+    @CrossOrigin(origins = "*")
     public List<Image> getImagesFromHost(@RequestBody Host host )
     {
+        logger.debug("---------------*********" + host);
         return service.getImages(host.getHostURL());
     }
 

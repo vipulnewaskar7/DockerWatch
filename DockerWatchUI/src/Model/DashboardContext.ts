@@ -29,6 +29,13 @@ export class DashboardContext{
       this.httpService = httpService;
     }
 
+    Initialize(){
+      let request = new MessagePattern<any>(null);
+      this.httpService.post<MessagePattern<Host[]>>(AppConfig.Address.GetAllHost, request).subscribe(data => {
+        this.hosts = data.message;
+      });
+    }
+
     ConnectHost(host: Host){
       if (this.selectedHost && this.selectedHost.id === host.id) {
         HostLogs.DisconnectHost();
@@ -38,7 +45,7 @@ export class DashboardContext{
         this.logs = "";
         HostLogs.ConnectHost(this.UpdateLogs);
         //this.GetContainer();
-        //this.GetImages();
+        this.GetImages(this.selectedHost);
       }
     }
     UpdateLogs(message: any){
@@ -54,8 +61,7 @@ export class DashboardContext{
 
     SaveHost(){
       let request = new MessagePattern<Host>(this.EditBoxHost);
-      let response = this.httpService.post<MessagePattern<MessageStatus>>(AppConfig.Address.SaveHost, request);
-      response.then(data => {
+      this.httpService.post<MessagePattern<MessageStatus>>(AppConfig.Address.SaveHost, request).subscribe(data => {
         console.log(data);
       });
     }
@@ -64,8 +70,8 @@ export class DashboardContext{
       this.selectedContainer = container;
     }
   
-    async GetImages() {
-      this.httpService.get<Image[]>(AppConfig.Address.GetImages).subscribe(images => {
+    async GetImages(host: Host) {
+      this.httpService.post<Image[]>(AppConfig.Address.GetImages, host).subscribe(images => {
         console.log(JSON.stringify(images));
         this.Images = images;
       });
