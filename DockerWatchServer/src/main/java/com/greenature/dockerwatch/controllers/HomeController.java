@@ -27,16 +27,16 @@ public class HomeController {
 //        return service.getImages();
 //    }
 
-    @RequestMapping(value = "/containers", method = RequestMethod.GET)
+    @RequestMapping(value = "/containers", method = RequestMethod.POST)
     @CrossOrigin(origins = "*")
-    public List<Container> getContainers() {
-        return service.getContainers();
+    public List<Container> getContainers(@RequestBody Host host) {
+        return service.getContainers(host.getHostURL());
     }
 
 
     @RequestMapping(value = "/images", method = RequestMethod.POST )
     @CrossOrigin(origins = "*")
-    public List<Image> getImagesFromHost(@RequestBody Host host )
+    public List<Image> getImagesFromHost(@RequestBody Host host)
     {
         return service.getImages(host.getHostURL());
     }

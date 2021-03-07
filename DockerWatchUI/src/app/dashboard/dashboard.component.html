@@ -164,7 +164,7 @@
                   <h5 class="mb-1">{{ imageItem.RepoTags[0].split(":")[0] }}</h5>
                   <small> {{ (imageItem.Size / 1024 / 1024 ).toFixed(2) }} MB</small>
                 </div>
-                <p class="mb-1">{{ imageItem.Labels.maintainer }}</p>
+                <p class="mb-1" *ngIf="imageItem.Labels">{{ imageItem.Labels.maintainer }}</p>
                 <small>Version : {{ imageItem.RepoTags[0].split(":")[1] }}</small>
               </a>
             </div>

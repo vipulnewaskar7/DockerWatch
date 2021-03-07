@@ -44,7 +44,7 @@ export class DashboardContext{
         this.selectedHost = host;
         this.logs = "";
         HostLogs.ConnectHost(this.UpdateLogs);
-        //this.GetContainer();
+        this.GetContainer(this.selectedHost);
         this.GetImages(this.selectedHost);
       }
     }
@@ -77,8 +77,8 @@ export class DashboardContext{
       });
     }
   
-    async GetContainer() {
-      this.httpService.get<Container[]>(AppConfig.Address.GetContainers).subscribe(containers => {
+    async GetContainer(host: Host) {
+      this.httpService.post<Container[]>(AppConfig.Address.GetContainers, host).subscribe(containers => {
         console.log(JSON.stringify(containers));
         this.Containers = containers;
         this.selectedContainer = this.Containers[0];
