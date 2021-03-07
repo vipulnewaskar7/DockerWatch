@@ -7,12 +7,12 @@ public class Host {
 
     Logger logger = LoggerFactory.getLogger(Host.class);
 
-    String id;
-    String name;
-    String address;
-    String status;
+    public String id;
+    public String name;
+    public String address;
+    public String status;
 
-    boolean isActive;
+    private boolean isActive;
 
     public Host() {
 
@@ -38,7 +38,6 @@ public class Host {
     }
 
     public String getHostURL() {
-        logger.debug("--------------*****" + this.address);
         return this.address;
     }
 

@@ -38,7 +38,6 @@ public class HomeController {
     @CrossOrigin(origins = "*")
     public List<Image> getImagesFromHost(@RequestBody Host host )
     {
-        logger.debug("---------------*********" + host);
         return service.getImages(host.getHostURL());
     }
 
