@@ -1,18 +1,21 @@
+import { Guid } from 'guid-typescript';
+
 export class MessagePattern<T>{
-    Id: string;
-    Name: string;
-    Catagory: Catagory;
-    Message: T;
+    requestid:string;
+    user: string;
+    time:number;
+    message:T;
 
-    constructor(Id: string, Name:string, Catagory: Catagory, Message: T){
-        this.Id = Id;
-        this.Name = Name;
-        this.Catagory = Catagory;
-        this.Message = Message;
+    constructor(message: T){
+        this.requestid = Guid.create().toString();
+        var user = localStorage.getItem('user');
+        if(!user){
+            localStorage.setItem('user', "default");
+            this.user = "default";
+        } else {
+            this.user = user;
+        }
+        this.time = Date.now();
+        this.message = message;
     }
-}
-
-const enum Catagory{
-    Notification,
-    Logs
 }
