@@ -72,16 +72,13 @@ export class DashboardContext{
   
     async GetImages(host: Host) {
       this.httpService.post<Image[]>(AppConfig.Address.GetImages, host).subscribe(images => {
-        console.log(JSON.stringify(images));
         this.Images = images;
       });
     }
   
     async GetContainer(host: Host) {
       this.httpService.post<Container[]>(AppConfig.Address.GetContainers, host).subscribe(containers => {
-        console.log(JSON.stringify(containers));
         this.Containers = containers;
-        this.selectedContainer = this.Containers[0];
       });
     }
   }
