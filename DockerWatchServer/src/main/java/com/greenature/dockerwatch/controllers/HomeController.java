@@ -1,5 +1,6 @@
 package com.greenature.dockerwatch.controllers;
 
+import com.greenature.dockerwatch.model.StatusManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.github.dockerjava.api.model.Container;
@@ -20,6 +21,8 @@ public class HomeController {
     @Autowired
     DockerService service;
 
+
+    StatusManager statusManager = new StatusManager();
 
 //    @RequestMapping(value = "/images", method = RequestMethod.GET)
 //    @CrossOrigin(origins = "*")
