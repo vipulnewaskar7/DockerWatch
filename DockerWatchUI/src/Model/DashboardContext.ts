@@ -18,10 +18,10 @@ export class DashboardContext{
 
     EditBoxHost: Host = new Host();
 
-    logs: string;
+    logs: string ="";
 
     httpService:HTTPService;
-  
+
     constructor(hosts: Host[], images: Image[], containers:Container[], httpService: HTTPService) {
       this.hosts = hosts;
       this.Images = images;
@@ -49,12 +49,14 @@ export class DashboardContext{
       }
     }
     UpdateLogs(message: any){
-      this.logs += message;
+      console.log(message.body);
+      this.logs += message.body;
+//       console.log(this.logs);
     }
     EditSelectedHost(){
       this.EditBoxHost = this.selectedHost;
     }
-  
+
     AddNewHost(){
       this.EditBoxHost = new Host();
     }
@@ -69,14 +71,14 @@ export class DashboardContext{
     SelectContainer(container: Container) {
       this.selectedContainer = container;
     }
-  
+
     async GetImages(host: Host) {
       this.httpService.post<Image[]>(AppConfig.Address.GetImages, host).subscribe(images => {
         console.log(JSON.stringify(images));
         this.Images = images;
       });
     }
-  
+
     async GetContainer(host: Host) {
       this.httpService.post<Container[]>(AppConfig.Address.GetContainers, host).subscribe(containers => {
         console.log(JSON.stringify(containers));
