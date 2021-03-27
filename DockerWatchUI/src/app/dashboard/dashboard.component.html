@@ -34,7 +34,7 @@
           <br />
           <ul class="nav flex-column mb-2" >
             <li class="nav-item" *ngFor="let host of DataContext.hosts">
-            <button type="button" style="width: 100%;" (click)="DataContext.ConnectHost(host)"
+            <button type="button" style="width: 100%;" (click)="ConnectHost(host)"
             class="btn {{ (DataContext.selectedHost && host.id === DataContext.selectedHost.id) ? 'btn-outline-success' : 'btn-outline-warning' }}">
               <h4>
                 <i class="fa fa-server" aria-hidden="true"></i>
