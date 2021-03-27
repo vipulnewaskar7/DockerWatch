@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HTTPService } from 'src/Services/HttpService';
 import { DashboardContext } from 'src/Model/DashboardContext';
+import { Host } from 'src/Model/Host';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,6 +25,10 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
   }
   
+
+  ConnectHost(host: Host){
+    this.DataContext.ConnectHost(host);
+  }
 
   Logout(){
     localStorage.setItem('user', "default" ); 

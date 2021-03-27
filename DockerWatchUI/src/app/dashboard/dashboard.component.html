@@ -34,7 +34,7 @@
           <br />
           <ul class="nav flex-column mb-2" >
             <li class="nav-item" *ngFor="let host of DataContext.hosts">
-            <button type="button" style="width: 100%;" (click)="DataContext.ConnectHost(host)"
+            <button type="button" style="width: 100%;" (click)="ConnectHost(host)"
             class="btn {{ (DataContext.selectedHost && host.id === DataContext.selectedHost.id) ? 'btn-outline-success' : 'btn-outline-warning' }}">
               <h4>
                 <i class="fa fa-server" aria-hidden="true"></i>
@@ -111,6 +111,9 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
+
+
+          <!-- List of Containers of connected Host -->
           <div id="Containers" class="tab-pane active"><br>
             <div
               class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -153,8 +156,9 @@
                 </div>
               </div>
             </div>
-
           </div>
+
+          <!-- List of images of connected Host -->
           <div id="Images" class="container tab-pane fade"><br>
             <h3>Image List</h3>
             <div class="list-group">
@@ -169,11 +173,13 @@
               </a>
             </div>
           </div>
+
         </div>
       </main>
     </div>
   </div>
 
+  <!-- Host Add/Edit Dialog Box -->
   <div class="modal fade" id="editHostModel" tabindex="-1" role="dialog" aria-labelledby="editHostModelTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
