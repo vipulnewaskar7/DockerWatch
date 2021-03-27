@@ -12,32 +12,20 @@ import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
 import java.util.List;
 
 public class Host {
-
-    Logger logger = LoggerFactory.getLogger(Host.class);
 
     public String id;
     public String name;
     public String address;
     public String status;
-    private boolean isActive;
-    private boolean isAlive;
+    Logger logger = LoggerFactory.getLogger(Host.class);
     List<Container> containerList;
     List<Image> imageList;
-    public DockerClient getDockerClient() {
-        return dockerClient;
-    }
-
-    public void setDockerClient(DockerClient dockerClient) {
-        this.dockerClient = dockerClient;
-    }
-
+    private boolean isActive;
+    private boolean isAlive;
     private DockerClient dockerClient;
-
-
 
     public Host(String id, String address) {
         this(id, address, true);
@@ -61,6 +49,14 @@ public class Host {
         this.isActive = isActive;
     }
 
+    public DockerClient getDockerClient() {
+        return dockerClient;
+    }
+
+    public void setDockerClient(DockerClient dockerClient) {
+        this.dockerClient = dockerClient;
+    }
+
     public String getHostId() {
         return this.id;
     }
@@ -82,7 +78,7 @@ public class Host {
     }
 
     public void setActive(boolean active) {
-        if(active){
+        if (active) {
             this.status = "Connected";
         } else {
             this.status = "Disconnected";
@@ -94,7 +90,7 @@ public class Host {
         return true;
     }
 
-    public String getDockerEngineId(){
+    public String getDockerEngineId() {
         return this.dockerClient.infoCmd().exec().getId();
     }
 
@@ -104,10 +100,8 @@ public class Host {
     }
 
     public void refreshContainersList() {
-        this.containerList =  this.dockerClient.listContainersCmd().exec();
+        this.containerList = this.dockerClient.listContainersCmd().exec();
 
     }
-
-
 
 }

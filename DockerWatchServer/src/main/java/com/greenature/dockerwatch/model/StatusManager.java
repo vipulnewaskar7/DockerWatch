@@ -1,5 +1,6 @@
 package com.greenature.dockerwatch.model;
 
+import com.greenature.dockerwatch.shared.Values;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
@@ -13,15 +14,11 @@ import java.util.concurrent.*;
 
 
 public class StatusManager {
-    Set<Host> allHosts;
     boolean isPollingOn = true;
     ScheduledExecutorService scheduler;
     List<ScheduledFuture<?>> scheduledFutureList;
 
     public StatusManager() {
-        allHosts = new HashSet<Host>();
-        Host host = new Host("0", "tcp://localhost:2375/", true);
-        allHosts.add(host);
         scheduler = Executors.newScheduledThreadPool(5);
         this.startPolling();
     }
@@ -29,7 +26,7 @@ public class StatusManager {
     private void startPolling() {
 
         scheduledFutureList = new ArrayList<>();
-        allHosts.parallelStream().forEach(host -> {
+        Values.allHosts.parallelStream().forEach(host -> {
             scheduledFutureList.add(this.scheduler.scheduleAtFixedRate(new HostWatcher(host), 2, 2, TimeUnit.SECONDS));
         });
 
@@ -56,8 +53,7 @@ public class StatusManager {
 
              if(host.isAlive()) {
                  // Refresh Containers List
-                 System.out.println(host.getHostURL() + host.getContainers());
-//                 host.refreshContainersList();
+                 host.refreshContainersList();
                  // Refresh Images List
 
              }
