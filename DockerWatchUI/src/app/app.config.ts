@@ -1,5 +1,6 @@
 export const AppConfig = {
     Address: {
+        Login:"https://rahul.jedhe.in/api/dockerwatch/login.php",
         GetAllHost:"https://rahul.jedhe.in/api/dockerwatch/getallhosts.php",
         GetHost:"",
         SaveHost:"https://rahul.jedhe.in/api/dockerwatch/savehost.php",
