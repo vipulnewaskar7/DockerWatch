@@ -1,13 +1,28 @@
 <div class="row">
     <div class="col-md-6">
       <div class="card">
-        <form class="box">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="box">
           <h1>Login</h1>
-            <p class="text-muted"> Please enter your login and password!</p>
-            <input type="text" name="username" placeholder="Username" [(ngModel)]="userDetails.username" >
-            <input type="password" name="password" placeholder="Password" [(ngModel)]="userDetails.password">
-            <input type="button" name="loginbtn" value="Login" (click)="onLogin()" />
-        </form>
+          <div class="form-group">
+            <input type="text" name="username" placeholder="Username" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                <div *ngIf="f.username.errors.required">Username is required</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" placeholder="Password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">Password is required</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button [disabled]="loading" name="loginbtn" class="btn btn-primary">
+              <span *ngIf="loading">loading</span>
+              <span *ngIf="!loading">Login</span>
+            </button>
+        </div>
+      </form>
+        
       </div>
     </div>
   </div>

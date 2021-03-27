@@ -41,10 +41,7 @@ export class DashboardContext{
       if (this.selectedHost && this.selectedHost.id === host.id) {
         this._disconnect();
       } else {
-        this.selectedHost = host;
-        this.GetContainer(this.selectedHost);
-        this.GetImages(this.selectedHost);
-        this._connect()
+        this._connect(host);
       }
     }
 
@@ -84,17 +81,27 @@ export class DashboardContext{
     topic: string = AppConfig.Address.LogTopic;
     stompClient: any;
 
-    _connect() {
+    _connect(host: Host) {
         console.log("Initialize WebSocket Connection");
         let ws = new SockJS(this.webSocketEndPoint);
         this.stompClient = Stomp.over(ws);
         const _this = this;
-        _this.stompClient.connect({}, function (frame: any) {
+        _this.stompClient.connect(host, function (frame: any) {
             _this.stompClient.subscribe(_this.topic, function (sdkEvent:any) {
                 _this.onMessageReceived(sdkEvent);
             });
+            window.alert("Host Connected");
+            _this.selectedHost = host;
+            _this.GetContainer(_this.selectedHost);
+            _this.GetImages(_this.selectedHost);
             //_this.stompClient.reconnect_delay = 2000;
-        }, this.errorCallBack);
+        }, function (error:any) {
+          console.log("errorCallBack -> " + error)
+          window.alert("Connection Error");
+          setTimeout(() => {
+              _this._connect(host);
+          }, 5000);
+        });
     };
 
     _disconnect() {
@@ -102,16 +109,10 @@ export class DashboardContext{
             this.stompClient.disconnect();
         }
         console.log("Disconnected");
+        window.alert("Host Disconnected");
     }
 
-    // on error, schedule a reconnection attempt
-    errorCallBack(error: any) {
-        console.log("errorCallBack -> " + error)
-        setTimeout(() => {
-            this._connect();
-        }, 5000);
-    }
-
+    
 	/**
 	 * Send message to sever via web socket
 	 * @param {*} message
