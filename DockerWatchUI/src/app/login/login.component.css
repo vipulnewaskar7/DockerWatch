@@ -10,8 +10,8 @@
     margin-top: 50%
 }
 
-.box input[type="text"],
-.box input[type="password"] {
+.box div input[type="text"],
+.box div input[type="password"] {
     border: 0;
     background: none;
     display: block;
@@ -30,16 +30,17 @@
     font-weight: 500
 }
 
-.box input[type="text"]:focus,
-.box input[type="password"]:focus {
+.box div input[type="text"]:focus,
+.box div input[type="password"]:focus {
     width: 300px;
     border-color: #2ecc71
 }
 
-.box input[type="button"] {
+.box div button {
     border: 0;
     background: none;
     display: block;
+    color: black;
     margin: 20px auto;
     text-align: center;
     border: 2px solid #2ecc71;
@@ -50,6 +51,6 @@
     cursor: pointer
 }
 
-.box input[type="button"]:hover {
+.box div button:hover {
     background: #2ecc71
 }
