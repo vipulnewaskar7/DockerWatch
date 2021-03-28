@@ -13,9 +13,9 @@ export class DashboardContext{
     Images: Image[];
     Containers: Container[];
 
-    selectedHost: Host;
+    selectedHost?: Host;
     selectedImage: Image;
-    selectedContainer: Container;
+    selectedContainer?: Container;
 
     EditBoxHost: Host = new Host();
 
@@ -46,7 +46,11 @@ export class DashboardContext{
     }
 
     EditSelectedHost(){
-      this.EditBoxHost = this.selectedHost;
+      if(this.selectedHost){
+        this.EditBoxHost = this.selectedHost;
+      } else {
+        this.EditBoxHost = new Host();
+      }
     }
   
     AddNewHost(){
@@ -57,7 +61,18 @@ export class DashboardContext{
       let request = new MessagePattern<Host>(this.EditBoxHost);
       this.httpService.post<MessagePattern<MessageStatus>>(AppConfig.Address.SaveHost, request).subscribe(data => {
         console.log(data);
+        this.Initialize();
       });
+    }
+
+    DeleteHost(){
+      if(this.selectedHost){
+        let request = new MessagePattern<Host>(this.selectedHost);
+        this.httpService.post<MessagePattern<MessageStatus>>(AppConfig.Address.DeleteHost, request).subscribe(data => {
+          console.log(data);
+          this.Initialize();
+        });
+      }
     }
 
     SelectContainer(container: Container) {
@@ -73,7 +88,6 @@ export class DashboardContext{
     async GetContainer(host: Host) {
       this.httpService.post<Container[]>(AppConfig.Address.GetContainers, host).subscribe(containers => {
         this.Containers = containers;
-        this.SelectContainer(this.Containers[0]);
       });
     }
 
@@ -108,6 +122,7 @@ export class DashboardContext{
         if (this.stompClient !== null) {
             this.stompClient.disconnect();
         }
+        delete this.selectedHost;
         console.log("Disconnected");
         window.alert("Host Disconnected");
     }
