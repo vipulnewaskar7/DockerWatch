@@ -24,29 +24,43 @@ public class Host {
     List<Container> containerList;
     List<Image> imageList;
     private boolean isActive;
-    private boolean isAlive;
     private DockerClient dockerClient;
 
-    public Host(String id, String address) {
-        this(id, address, true);
+
+    public Host(String address) {
+        this(address, true);
         this.status = "Connected";
     }
 
-    public Host(String id, String address, boolean isActive) {
-        this.id = id;
+    public Host(String address, boolean isActive) {
         this.address = address;
-        DockerClientConfig custom = DefaultDockerClientConfig.createDefaultConfigBuilder()
-                .withDockerHost(address)
-                .withDockerTlsVerify(false)
-                .build();
-        DockerHttpClient httpClient = new ApacheDockerHttpClient.Builder()
-                .dockerHost(custom.getDockerHost())
-                .sslConfig(custom.getSSLConfig())
-                .build();
-        this.dockerClient = DockerClientImpl.getInstance(custom, httpClient);
-        this.containerList = dockerClient.listContainersCmd().exec();
-        this.imageList = dockerClient.listImagesCmd().exec();
         this.isActive = isActive;
+    }
+
+    public boolean validate() {
+        try {
+            DockerClientConfig custom = DefaultDockerClientConfig.createDefaultConfigBuilder()
+                    .withDockerHost(address)
+                    .withDockerTlsVerify(false)
+                    .build();
+            DockerHttpClient httpClient = new ApacheDockerHttpClient.Builder()
+                    .dockerHost(custom.getDockerHost())
+                    .sslConfig(custom.getSSLConfig())
+                    .build();
+            this.dockerClient = DockerClientImpl.getInstance(custom, httpClient);
+            this.containerList = dockerClient.listContainersCmd().exec();
+            this.imageList = dockerClient.listImagesCmd().exec();
+            this.id = dockerClient.infoCmd().exec().getId();
+            return true;
+        }
+        catch (Exception ex) {
+            logger.debug("Something went wrong while validating Host");
+            logger.debug(ex.getMessage());
+            return false;
+        }
+
+
+
     }
 
     public DockerClient getDockerClient() {
@@ -58,19 +72,11 @@ public class Host {
     }
 
     public String getHostId() {
-        return this.id;
-    }
-
-    public void setHostId(String id) {
-        this.id = id;
+        return new String(this.id);
     }
 
     public String getHostURL() {
         return this.address;
-    }
-
-    public void setHostURL(String address) {
-        this.address = address;
     }
 
     public boolean isActive() {
@@ -86,9 +92,6 @@ public class Host {
         this.isActive = active;
     }
 
-    public boolean isAlive() {
-        return true;
-    }
 
     public String getDockerEngineId() {
         return this.dockerClient.infoCmd().exec().getId();
@@ -102,6 +105,15 @@ public class Host {
     public void refreshContainersList() {
         this.containerList = this.dockerClient.listContainersCmd().exec();
 
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if(other instanceof Host) {
+            Host otherHost = (Host) other;
+            return otherHost.id.equals(this.id);
+        }
+        return false;
     }
 
 }

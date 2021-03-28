@@ -7,8 +7,14 @@ import java.util.Set;
 
 public class Values {
     public static Set<Host> allHosts = new HashSet<>();
-    static {
-        Host localhost = new Host("0", "tcp://localhost:2375/", true);
-        allHosts.add(localhost);
-    }
+//    static {
+//        Host localhost = new Host("tcp://localhost:2375/", true);
+//        allHosts.add(localhost);
+//    }
+
+    private static Values values;
+
+
+
 }
+

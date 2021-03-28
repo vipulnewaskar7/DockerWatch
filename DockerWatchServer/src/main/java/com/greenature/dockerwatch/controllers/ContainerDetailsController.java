@@ -25,14 +25,16 @@ public class ContainerDetailsController implements WebSocketMessageBrokerConfigu
     DockerService service;
 
     @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/subscribe");
+    public void configureMessageBroker(MessageBrokerRegistry registry) {
+        registry.enableSimpleBroker("/subscribe");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/logs").setAllowedOrigins("*").withSockJS();
-        service.tailLogs();
+//        service.tailLogs();
     }
+
+
 
 }

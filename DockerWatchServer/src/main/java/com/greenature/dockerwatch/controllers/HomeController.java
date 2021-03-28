@@ -21,14 +21,7 @@ public class HomeController {
     @Autowired
     DockerService service;
 
-
     StatusManager statusManager = new StatusManager();
-
-//    @RequestMapping(value = "/images", method = RequestMethod.GET)
-//    @CrossOrigin(origins = "*")
-//    public List<Image> getImages() {
-//        return service.getImages();
-//    }
 
     @RequestMapping(value = "/containers", method = RequestMethod.POST)
     @CrossOrigin(origins = "*")
@@ -43,6 +36,8 @@ public class HomeController {
     {
         return service.getImages(host.getHostURL());
     }
+
+
 
 
 }
