@@ -61,7 +61,7 @@
                 <i class="fa fa-pencil" aria-hidden="true"></i>
                 &nbsp;Edit
               </button>
-              <button type="button" class="btn btn-sm btn-outline-danger">
+              <button type="button" class="btn btn-sm btn-outline-danger" (click)="DataContext.DeleteHost()">
                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                 &nbsp;Delete
               </button>
@@ -131,7 +131,7 @@
               <div class="col-2">
                 <div class="nav flex-column nav-pills" aria-orientation="vertical">
                   <div *ngFor="let container of DataContext.Containers; index as i">
-                    <a class="list-group-item list-group-item-action flex-column align-items-start {{DataContext.selectedContainer.Id === container.Id ? 'active' : '' }}"
+                    <a class="list-group-item list-group-item-action flex-column align-items-start {{(DataContext.selectedContainer && DataContext.selectedContainer.Id === container.Id) ? 'active' : '' }}"
                       data-toggle="pill" href="#v-pills-{{container.Id}}" (click)="DataContext.SelectContainer(container)">
                       <h5 class="mb-1">{{container.Names[0].substring(1)}}</h5>
                       <p class="mb-1">{{container.Image}}</p>
@@ -146,7 +146,7 @@
               </div>
               <div class="col-10">
                 <div class="tab-content">
-                  <div class="tab-pane fade {{DataContext.selectedContainer.Id === container.Id ? 'show active' : '' }}"
+                  <div class="tab-pane fade {{(DataContext.selectedContainer && DataContext.selectedContainer.Id === container.Id) ? 'show active' : '' }}"
                     *ngFor="let container of DataContext.Containers;">
                     <div class="card bg-dark text-white">
                       <h5 class="card-title">Logs</h5>
