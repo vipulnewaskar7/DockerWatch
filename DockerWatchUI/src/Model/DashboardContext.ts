@@ -31,8 +31,7 @@ export class DashboardContext{
     }
 
     Initialize(){
-      let request = new MessagePattern<any>(null);
-      this.httpService.post<MessagePattern<Host[]>>(AppConfig.Address.GetAllHost, request).subscribe(data => {
+      this.httpService.get<MessagePattern<Host[]>>(AppConfig.Address.GetAllHost).subscribe(data => {
         this.hosts = data.message;
       });
     }
@@ -60,17 +59,21 @@ export class DashboardContext{
     SaveHost(){
       let request = new MessagePattern<Host>(this.EditBoxHost);
       this.httpService.post<MessagePattern<MessageStatus>>(AppConfig.Address.SaveHost, request).subscribe(data => {
-        console.log(data);
-        this.Initialize();
+        if(data.message.status == "SUCCESS"){
+          console.log(data);
+          this.Initialize();
+        }
       });
     }
 
     DeleteHost(){
       if(this.selectedHost){
         let request = new MessagePattern<Host>(this.selectedHost);
-        this.httpService.post<MessagePattern<MessageStatus>>(AppConfig.Address.DeleteHost, request).subscribe(data => {
-          console.log(data);
-          this.Initialize();
+        this.httpService.delete<MessagePattern<MessageStatus>>(AppConfig.Address.DeleteHost, request).subscribe(data => {
+          if(data.message.status == "SUCCESS"){
+            console.log(data);
+            this.Initialize();
+          }
         });
       }
     }
