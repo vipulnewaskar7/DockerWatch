@@ -1,16 +1,12 @@
 package com.greenature.dockerwatch.controllers;
 
 import com.greenature.dockerwatch.model.StatusManager;
+import com.greenature.dockerwatch.services.DockerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.github.dockerjava.api.model.Container;
-import com.github.dockerjava.api.model.Image;
-import com.greenature.dockerwatch.model.Host;
-import com.greenature.dockerwatch.services.DockerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -22,22 +18,6 @@ public class HomeController {
     DockerService service;
 
     StatusManager statusManager = new StatusManager();
-
-    @RequestMapping(value = "/containers", method = RequestMethod.POST)
-    @CrossOrigin(origins = "*")
-    public List<Container> getContainers(@RequestBody Host host) {
-        return service.getContainers(host.getHostURL());
-    }
-
-
-    @RequestMapping(value = "/images", method = RequestMethod.POST )
-    @CrossOrigin(origins = "*")
-    public List<Image> getImagesFromHost(@RequestBody Host host)
-    {
-        return service.getImages(host.getHostURL());
-    }
-
-
 
 
 }

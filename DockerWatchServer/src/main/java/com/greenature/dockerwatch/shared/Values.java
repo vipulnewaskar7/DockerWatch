@@ -1,20 +1,11 @@
 package com.greenature.dockerwatch.shared;
 
-import com.greenature.dockerwatch.model.Host;
+import com.greenature.dockerwatch.model.BaseHost;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class Values {
-    public static Set<Host> allHosts = new HashSet<>();
-//    static {
-//        Host localhost = new Host("tcp://localhost:2375/", true);
-//        allHosts.add(localhost);
-//    }
-
-    private static Values values;
-
-
-
+    public static Set<BaseHost> allHosts = new LinkedHashSet<>();
 }
 

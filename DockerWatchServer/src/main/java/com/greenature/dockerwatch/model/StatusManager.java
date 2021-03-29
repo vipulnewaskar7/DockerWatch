@@ -1,16 +1,14 @@
 package com.greenature.dockerwatch.model;
 
 import com.greenature.dockerwatch.shared.Values;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PreDestroy;
-import javax.inject.Singleton;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 
 public class StatusManager {
@@ -31,12 +29,11 @@ public class StatusManager {
         });
 
 
-
     }
 
     @PreDestroy
     private void cleanup() {
-        scheduledFutureList.forEach(handler-> {
+        scheduledFutureList.forEach(handler -> {
             handler.cancel(true);
         });
         this.scheduler.shutdownNow();
@@ -44,19 +41,20 @@ public class StatusManager {
 
 
     static class HostWatcher implements Runnable {
-        private final Host host;
-        public HostWatcher(Host host) {
-            this.host = host;
+        private final BaseHost baseHost;
+
+        public HostWatcher(BaseHost baseHost) {
+            this.baseHost = baseHost;
         }
 
         public void run() {
 
-             if(host.isAlive()) {
-                 // Refresh Containers List
-                 host.refreshContainersList();
-                 // Refresh Images List
+            if (baseHost.validate()) {
+                // Refresh Containers List
+//                host.refreshContainersList();
+                // Refresh Images List
 
-             }
+            }
         }
     }
 
