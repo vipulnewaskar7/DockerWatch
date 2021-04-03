@@ -43,6 +43,18 @@ public class BaseHost {
         this.address = address;
     }
 
+    public DockerClient getDockerClient(){
+        DockerClientConfig custom = DefaultDockerClientConfig.createDefaultConfigBuilder()
+                .withDockerHost(this.address)
+                .withDockerTlsVerify(false)
+                .build();
+        DockerHttpClient httpClient = new ApacheDockerHttpClient.Builder()
+                .dockerHost(custom.getDockerHost())
+                .sslConfig(custom.getSSLConfig())
+                .build();
+        return DockerClientImpl.getInstance(custom, httpClient);
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other instanceof BaseHost) {

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.greenature.dockerwatch.model.BaseHost;
 import com.greenature.dockerwatch.model.MessagePattern;
 import com.greenature.dockerwatch.model.ResponseCode;
+import com.greenature.dockerwatch.model.User;
 import com.greenature.dockerwatch.shared.Values;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ public class HostController {
 
     @GetMapping("/hosts")
     public MessagePattern<Set<BaseHost>> getAllHosts() throws JsonProcessingException {
-        return new MessagePattern<>("0", "", LocalDate.now().toEpochDay(), Values.allHosts );
+        return new MessagePattern<>("0", "", LocalDate.now().toEpochDay(), Values.allHosts);
     }
 
     //ADD
@@ -30,7 +31,7 @@ public class HostController {
         System.out.println(Values.allHosts);
         BaseHost host = request.getMessage();
         ResponseCode responseCode = new ResponseCode();
-        MessagePattern<ResponseCode> messagePattern = new MessagePattern<>(request.getRequestid(), "", LocalDate.now().toEpochDay(), responseCode );
+        MessagePattern<ResponseCode> messagePattern = new MessagePattern<>(request.getRequestid(), "", LocalDate.now().toEpochDay(), responseCode);
         if (host.validate()) {
             System.out.println(Values.allHosts);
             Values.allHosts.add(host);
@@ -54,11 +55,10 @@ public class HostController {
         System.out.println(host.id);
         ResponseCode responseCode = new ResponseCode();
         MessagePattern<ResponseCode> messagePattern = new MessagePattern<>(request.getRequestid(), "", LocalDate.now().toEpochDay(), responseCode);
-        if( Values.allHosts.removeIf(element-> element.equals(host))) {
+        if (Values.allHosts.removeIf(element -> element.equals(host))) {
             responseCode.setMessage("");
             responseCode.setStatus("DELETE SUCCESS");
-        }
-        else {
+        } else {
             responseCode.setMessage("");
             responseCode.setStatus("DELETE FAILED");
         }
@@ -66,5 +66,14 @@ public class HostController {
 
         return messagePattern;
     }
+
+    @PostMapping("/login")
+    public MessagePattern<ResponseCode> login(@RequestBody MessagePattern<User> request) {
+        User user = request.getMessage();
+        ResponseCode responseCode = new ResponseCode();
+        responseCode.setStatus("SUCCESS");
+        return new MessagePattern<>(request.getRequestid(), "", LocalDate.now().toEpochDay(), responseCode);
+    }
+
 
 }
