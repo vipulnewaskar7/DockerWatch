@@ -1,22 +1,20 @@
 package com.greenature.dockerwatch.shared;
 
 import com.greenature.dockerwatch.model.BaseHost;
+import com.greenature.dockerwatch.services.DockerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+
 public class Values {
 
-    static BaseHost baseHost = new BaseHost();
-    static {
-        baseHost.setName("Localhost");
-        baseHost.setAddress("tcp://localhost:2375");
-    }
-
-    public static Set<BaseHost> allHosts = new LinkedHashSet<>(Collections.singletonList(baseHost));
-
+    public static Set<BaseHost> allHosts = new LinkedHashSet<>();
+//[{host0}
 
 }
 

@@ -3,15 +3,15 @@ package com.greenature.dockerwatch.model;
 import com.github.dockerjava.api.model.Container;
 
 public class LogRequest {
-    BaseHost baseHost;
+    BaseHost host;
     Container container;
 
-    public BaseHost getBaseHost() {
-        return baseHost;
+    public BaseHost getHost() {
+        return host;
     }
 
-    public void setBaseHost(BaseHost baseHost) {
-        this.baseHost = baseHost;
+    public void setHost(BaseHost host) {
+        this.host = host;
     }
 
     public Container getContainer() {

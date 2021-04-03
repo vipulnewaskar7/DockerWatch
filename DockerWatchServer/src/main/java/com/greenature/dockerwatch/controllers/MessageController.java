@@ -1,10 +1,7 @@
 package com.greenature.dockerwatch.controllers;
 
 import com.github.dockerjava.api.model.Container;
-import com.greenature.dockerwatch.model.BaseHost;
-import com.greenature.dockerwatch.model.LogRequest;
-import com.greenature.dockerwatch.model.MessagePattern;
-import com.greenature.dockerwatch.model.ResponseCode;
+import com.greenature.dockerwatch.model.*;
 import com.greenature.dockerwatch.services.NotifierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -22,16 +19,16 @@ public class MessageController {
 
     @MessageMapping("/connecthost")
     public void connectHost(@Payload MessagePattern<BaseHost> messagePattern) {
-        ResponseCode responseCode = new ResponseCode();
-        MessagePattern<ResponseCode> response = new MessagePattern<>("", messagePattern.getUser(), 0, responseCode);
-        messagingTemplate.convertAndSendToUser(messagePattern.getUser(), "/topic/dockerwatch", response);
+        //TODO: start threads sending details to this user
+        SocketPattern<String> resp = new SocketPattern<>(MessageType.HOSTS, "CONNECTED");
+        messagingTemplate.convertAndSendToUser(messagePattern.getUser(), "/topic/dockerwatch", resp);
     }
 
     @MessageMapping("/disconnecthost")
     public void disconenctHost(@Payload MessagePattern<BaseHost> messagePattern) {
-        ResponseCode responseCode = new ResponseCode();
-        MessagePattern<ResponseCode> response = new MessagePattern<>("", "", 0, responseCode);
-        messagingTemplate.convertAndSendToUser(messagePattern.getUser(), "/topic/dockerwatch", response);
+        //TODO: remove threads sending details to this user
+        SocketPattern<String> resp = new SocketPattern<>(MessageType.HOSTS, "DISCONNECTED");
+        messagingTemplate.convertAndSendToUser(messagePattern.getUser(), "/topic/dockerwatch", resp);
     }
 
     @MessageMapping("/logs")

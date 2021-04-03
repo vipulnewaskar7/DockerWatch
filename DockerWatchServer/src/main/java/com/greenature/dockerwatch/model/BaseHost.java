@@ -57,8 +57,10 @@ public class BaseHost {
             BaseHost otherHost = (BaseHost) other;
             System.out.println("" + this.id);
             System.out.println("" + otherHost.id);
+            System.out.println("host equals " + otherHost.id.equals(this.id));
             return otherHost.id.equals(this.id);
         }
+        System.out.println("else :host equals false");
         return false;
     }
 }

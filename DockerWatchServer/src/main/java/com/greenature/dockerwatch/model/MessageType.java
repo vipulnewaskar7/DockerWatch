@@ -3,7 +3,9 @@ package com.greenature.dockerwatch.model;
 public enum MessageType {
     IMAGES("IMAGES"),
     CONTAINERS("CONTAINERS"),
-    LOGS("LOGS");
+    LOGS("LOGS"),
+    HOSTS("HOSTS")
+    ;
 
     String type;
 

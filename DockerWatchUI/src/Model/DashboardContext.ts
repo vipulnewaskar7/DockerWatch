@@ -41,7 +41,9 @@ export class DashboardContext{
 
     ConnectHost(host: Host, topic: string){
       if (this.selectedHost && this.selectedHost.id === host.id) {
-        this._disconnect();
+        //this._disconnect();
+        var req = new MessagePattern<Host>(host);
+        this._send(req, AppConfig.Address.DisconnectHost);
       } else {
         this._connect(host, topic);
       }
@@ -120,6 +122,8 @@ export class DashboardContext{
                 _this.onMessageReceived(sdkEvent);
             });
             window.alert("Host Connected");
+            var req = new MessagePattern<Host>(host);
+            _this._send(req, AppConfig.Address.ConnectHost);
             _this.selectedHost = host;
             _this.GetContainer(_this.selectedHost);
             _this.GetImages(_this.selectedHost);
@@ -164,6 +168,11 @@ export class DashboardContext{
             break;
           case "LOGS":
             this.logs += message.data.logChunk;
+            break;
+          case "HOSTS":
+            if(message.data=="DISCONNECTED") {
+              this._disconnect();
+            }
             break;
         }
     }

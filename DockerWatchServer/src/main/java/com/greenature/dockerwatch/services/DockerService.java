@@ -33,5 +33,11 @@ public class DockerService {
         return DockerClientImpl.getInstance(custom, httpClient);
     }
 
+    public boolean validate(BaseHost baseHost) {
+        String hostId = this.getDockerClient(baseHost).infoCmd().exec().getId();
+        baseHost.setId(hostId);
+        return true;
+    }
+
 
 }
