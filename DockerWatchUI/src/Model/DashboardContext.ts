@@ -100,7 +100,7 @@ export class DashboardContext{
 
     async GetLogs(host: Host, container: Container) {
       var req = new MessagePattern<LogRequest> (new LogRequest(host,container));
-      this._send(host, AppConfig.Address.Containers);
+      this._send(req, AppConfig.Address.Logs);
     }
 
     Logout(req: MessagePattern<string>): Observable<MessagePattern<MessageStatus>> {
@@ -155,18 +155,14 @@ export class DashboardContext{
     onMessageReceived(msg: any) {
         var message = JSON.parse(msg.body);
         console.log("Message Recieved from Server :: " + message);
-        console.log(message.type);
         switch(message.type){
           case "IMAGES":
-            console.log(message.data);
             this.Images = message.data;
             break;
           case "CONTAINERS":
-            console.log(message.data);
             this.Containers = message.data;
             break;
           case "LOGS":
-            console.log(message.data);
             this.logs += message.data.logChunk;
             break;
         }
