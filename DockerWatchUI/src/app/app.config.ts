@@ -10,8 +10,8 @@ export const AppConfig = {
         SocketURL:"http://localhost:8080/ws",
         Subscribe:"/user/.user./topic/dockerwatch",
         
-        GetImages:"/app/getimages",
-        GetContainers:"/app/getcontainers",
-        GetLogs:"/app/getlogs"
+        Images:"/app/images",
+        Containers:"/app/containers",
+        Logs:"/app/logs"
     }
 }

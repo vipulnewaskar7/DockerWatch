@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HTTPService } from 'src/Services/HttpService';
 import { DashboardContext } from 'src/Model/DashboardContext';
 import { Host } from 'src/Model/Host';
+import { AppConfig } from '../app.config';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,6 +16,8 @@ export class DashboardComponent implements OnInit {
 
   DataContext: DashboardContext;
 
+  topic : string;
+
   constructor(public httpService: HTTPService) {
     this.DataContext = new DashboardContext([],[],[], httpService);
 
@@ -23,11 +26,15 @@ export class DashboardComponent implements OnInit {
 
  
   ngOnInit(): void {
+    var user = localStorage.getItem('user');
+    if(user){
+      this.topic = AppConfig.Address.Subscribe.replace(".user.", user);
+    }
   }
   
 
   ConnectHost(host: Host){
-    this.DataContext.ConnectHost(host);
+    this.DataContext.ConnectHost(host, this.topic);
   }
 
   Logout(){

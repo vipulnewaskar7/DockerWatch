@@ -36,13 +36,14 @@ export class DashboardContext{
       });
     }
 
-    ConnectHost(host: Host){
+    ConnectHost(host: Host, topic: string){
       if (this.selectedHost && this.selectedHost.id === host.id) {
         this._disconnect();
       } else {
-        this._connect(host);
+        this._connect(host, topic);
       }
     }
+
     EditSelectedHost(){
       if(this.selectedHost){
         this.EditBoxHost = this.selectedHost;
@@ -82,28 +83,23 @@ export class DashboardContext{
     }
 
     async GetImages(host: Host) {
-      this.httpService.post<Image[]>(AppConfig.Address.GetImages, host).subscribe(images => {
-        this.Images = images;
-      });
+      
     }
 
     async GetContainer(host: Host) {
-      this.httpService.post<Container[]>(AppConfig.Address.GetContainers, host).subscribe(containers => {
-        this.Containers = containers;
-      });
+      
     }
 
-    webSocketEndPoint: string = AppConfig.Address.GetLogs;
-    topic: string = AppConfig.Address.LogTopic;
+
     stompClient: any;
 
-    _connect(host: Host) {
+    _connect(host: Host, topic: string) {
         console.log("Initialize WebSocket Connection");
-        let ws = new SockJS(this.webSocketEndPoint);
+        let ws = new SockJS(AppConfig.Address.SocketURL);
         this.stompClient = Stomp.over(ws);
         const _this = this;
         _this.stompClient.connect(host, function (frame: any) {
-            _this.stompClient.subscribe(_this.topic, function (sdkEvent:any) {
+            _this.stompClient.subscribe(topic, function (sdkEvent:any) {
                 _this.onMessageReceived(sdkEvent);
             });
             window.alert("Host Connected");
@@ -115,7 +111,7 @@ export class DashboardContext{
           console.log("errorCallBack -> " + error)
           window.alert("Connection Error");
           setTimeout(() => {
-              _this._connect(host);
+              _this._connect(host, topic);
           }, 5000);
         });
     };
@@ -134,9 +130,9 @@ export class DashboardContext{
 	 * Send message to sever via web socket
 	 * @param {*} message
 	 */
-    _send(message: any) {
+    _send(message: any, url: string) {
         console.log("calling logout api via web socket");
-        this.stompClient.send(AppConfig.Address.SendLogMessage, {}, JSON.stringify(message));
+        this.stompClient.send(url, {}, JSON.stringify(message));
     }
 
     onMessageReceived(message: any) {
