@@ -83,6 +83,9 @@ export class DashboardContext{
 
     SelectContainer(container: Container) {
       this.selectedContainer = container;
+      if(this.selectedHost){
+        this.GetLogs(this.selectedHost, this.selectedContainer);
+      }
     }
 
     async GetImages(host: Host) {
@@ -164,7 +167,7 @@ export class DashboardContext{
             break;
           case "LOGS":
             console.log(message.data);
-            this.logs += message.data;
+            this.logs += message.data.logChunk;
             break;
         }
     }
