@@ -1,12 +1,12 @@
-version: 3.9
+version: "3.7"
 services:
   dockerwatch-backend:
-    image: dockerwatch-backend:latest
+    image: vipulnewaskar7/dockerwatch-backend:latest
     ports:
       - "8080:8080"
 
   dockerwatch-frontend:
-    image: dockerwatch-frontend
+    image: vipulnewaskar7/dockerwatch-frontend:latest
     ports:
       - "4200:4200"
 
