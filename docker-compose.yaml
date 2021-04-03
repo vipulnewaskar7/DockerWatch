@@ -1,0 +1,12 @@
+version: 3.9
+services:
+  dockerwatch-backend:
+    image: dockerwatch-backend:latest
+    ports:
+      - "8080:8080"
+
+  dockerwatch-frontend:
+    image: dockerwatch-frontend
+    ports:
+      - "4200:4200"
+
