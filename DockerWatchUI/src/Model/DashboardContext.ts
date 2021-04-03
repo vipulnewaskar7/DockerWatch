@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { LogRequest } from './LogRequest';
 
 export class DashboardContext{
-    
+
     hosts: Host[];
     Images: Image[];
     Containers: Container[];
@@ -25,7 +25,7 @@ export class DashboardContext{
     httpService:HTTPService;
 
     logs: string ="";
-  
+
     constructor(hosts: Host[], images: Image[], containers:Container[], httpService: HTTPService) {
       this.hosts = hosts;
       this.Images = images;
@@ -86,20 +86,22 @@ export class DashboardContext{
     }
 
     async GetImages(host: Host) {
-      this._send(host, AppConfig.Address.Images);
+      var req = new MessagePattern<Host>(host);
+      this._send(req, AppConfig.Address.Images);
     }
 
     async GetContainer(host: Host) {
-      this._send(host, AppConfig.Address.Containers);
+      var req = new MessagePattern<Host>(host);
+      this._send(req, AppConfig.Address.Containers);
     }
 
     async GetLogs(host: Host, container: Container) {
-      var req = new LogRequest(host, container);
+      var req = new MessagePattern<LogRequest> (new LogRequest(host,container));
       this._send(host, AppConfig.Address.Containers);
     }
 
     Logout(req: MessagePattern<string>): Observable<MessagePattern<MessageStatus>> {
-        return this.httpService.post<MessagePattern<MessageStatus>>(AppConfig.Address.Login, req);
+        return this.httpService.post<MessagePattern<MessageStatus>>(AppConfig.Address.Logout, req);
     }
 
 
@@ -137,7 +139,7 @@ export class DashboardContext{
         window.alert("Host Disconnected");
     }
 
-    
+
 	/**
 	 * Send message to sever via web socket
 	 * @param {*} message
@@ -147,16 +149,21 @@ export class DashboardContext{
         this.stompClient.send(url, {}, JSON.stringify(message));
     }
 
-    onMessageReceived(message: any) {
+    onMessageReceived(msg: any) {
+        var message = JSON.parse(msg.body);
         console.log("Message Recieved from Server :: " + message);
+        console.log(message.type);
         switch(message.type){
           case "IMAGES":
+            console.log(message.data);
             this.Images = message.data;
             break;
           case "CONTAINERS":
+            console.log(message.data);
             this.Containers = message.data;
             break;
           case "LOGS":
+            console.log(message.data);
             this.logs += message.data;
             break;
         }

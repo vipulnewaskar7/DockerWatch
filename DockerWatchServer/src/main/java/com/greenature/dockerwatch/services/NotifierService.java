@@ -6,9 +6,7 @@ import com.github.dockerjava.api.model.EventType;
 import com.github.dockerjava.api.model.Frame;
 import com.github.dockerjava.api.model.Image;
 import com.github.dockerjava.core.command.LogContainerResultCallback;
-import com.greenature.dockerwatch.model.BaseHost;
-import com.greenature.dockerwatch.model.LogChunk;
-import com.greenature.dockerwatch.model.MessagePattern;
+import com.greenature.dockerwatch.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -21,20 +19,25 @@ public class NotifierService {
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
-    public void startSendingLogs(MessagePattern<Container> messagePattern) {
-        BaseHost host = new BaseHost();
+    @Autowired
+    DockerService dockerService;
+
+    public void startSendingLogs(MessagePattern<LogRequest> messagePattern) {
+        LogRequest logRequest = messagePattern.getMessage();
+        BaseHost baseHost = logRequest.getBaseHost();
+        Container container = logRequest.getContainer();
         String containerId = "";
         CompletableFuture.runAsync(() -> {
-            LogContainerCmd logContainerCmd = host.getDockerClient().logContainerCmd(containerId);
+            LogContainerCmd logContainerCmd = dockerService.getDockerClient(baseHost).logContainerCmd(containerId);
             logContainerCmd.withStdOut(true).withStdErr(true).withFollowStream(true);
             //TODO : Using ResultCallback.Adapter instead of deprecated
             logContainerCmd.exec(new LogContainerResultCallback() {
                 @Override
                 public void onNext(Frame item) {
                     System.out.println(new String(item.getPayload()));
-                    LogChunk logChunk = new LogChunk(host.getId(), containerId, item.getPayload());
-                    MessagePattern<LogChunk> logs = new MessagePattern<>("", "", 0L, logChunk);
-                    simpMessagingTemplate.convertAndSendToUser(messagePattern.getUser(), "/topic/dockerwatch", logs);
+                    LogChunk logChunk = new LogChunk(baseHost.getId(), containerId, item.getPayload());
+                    SocketPattern<LogChunk> response = new SocketPattern<>(MessageType.LOGS, logChunk);
+                    simpMessagingTemplate.convertAndSendToUser(messagePattern.getUser(), "/topic/dockerwatch", response);
                 }
             });
         });
@@ -43,20 +46,22 @@ public class NotifierService {
     public void startSendingImageList(MessagePattern<BaseHost> messagePattern) {
         //TODO: Every after some interval
         BaseHost baseHost = messagePattern.getMessage();
-        List<Image> images = baseHost.getDockerClient().listImagesCmd().exec();
-        simpMessagingTemplate.convertAndSendToUser(messagePattern.getUser(), "/topic/dockerwatch", images);
+        List<Image> images = dockerService.getDockerClient(baseHost).listImagesCmd().exec();
+        SocketPattern<List<Image>> response = new SocketPattern<>(MessageType.IMAGES, images);
+        simpMessagingTemplate.convertAndSendToUser(messagePattern.getUser(), "/topic/dockerwatch", response);
     }
 
     public void startSendingContainerList(MessagePattern<BaseHost> messagePattern) {
         //TODO: Every after some interval
         BaseHost baseHost = messagePattern.getMessage();
-        List<Image> images = baseHost.getDockerClient().listImagesCmd().exec();
-        simpMessagingTemplate.convertAndSendToUser(messagePattern.getUser(), "/topic/dockerwatch", images);
+        List<Container> containers = dockerService.getDockerClient(baseHost).listContainersCmd().exec();
+        SocketPattern<List<Container>> response = new SocketPattern<>(MessageType.CONTAINERS, containers);
+        simpMessagingTemplate.convertAndSendToUser(messagePattern.getUser(), "/topic/dockerwatch", response);
     }
 
     public void test() {
         BaseHost baseHost = new BaseHost();
-        baseHost.getDockerClient().eventsCmd().withEventTypeFilter(EventType.IMAGE);
+        dockerService.getDockerClient(baseHost).eventsCmd().withEventTypeFilter(EventType.IMAGE);
     }
 
 }

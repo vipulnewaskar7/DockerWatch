@@ -2,6 +2,7 @@ package com.greenature.dockerwatch.controllers;
 
 import com.github.dockerjava.api.model.Container;
 import com.greenature.dockerwatch.model.BaseHost;
+import com.greenature.dockerwatch.model.LogRequest;
 import com.greenature.dockerwatch.model.MessagePattern;
 import com.greenature.dockerwatch.model.ResponseCode;
 import com.greenature.dockerwatch.services.NotifierService;
@@ -34,7 +35,7 @@ public class MessageController {
     }
 
     @MessageMapping("/logs")
-    public void getLogs(@Payload MessagePattern<Container> messagePattern) {
+    public void getLogs(@Payload MessagePattern<LogRequest> messagePattern) {
         notifierService.startSendingLogs(messagePattern);
     }
 

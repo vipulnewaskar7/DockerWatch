@@ -6,6 +6,7 @@ import com.github.dockerjava.core.DockerClientConfig;
 import com.github.dockerjava.core.DockerClientImpl;
 import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
 import com.github.dockerjava.transport.DockerHttpClient;
+import com.sun.xml.internal.ws.developer.Serialization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,16 +44,12 @@ public class BaseHost {
         this.address = address;
     }
 
-    public DockerClient getDockerClient(){
-        DockerClientConfig custom = DefaultDockerClientConfig.createDefaultConfigBuilder()
-                .withDockerHost(this.address)
-                .withDockerTlsVerify(false)
-                .build();
-        DockerHttpClient httpClient = new ApacheDockerHttpClient.Builder()
-                .dockerHost(custom.getDockerHost())
-                .sslConfig(custom.getSSLConfig())
-                .build();
-        return DockerClientImpl.getInstance(custom, httpClient);
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
