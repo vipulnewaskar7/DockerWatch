@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.greenature.dockerwatch.model.BaseHost;
 import com.greenature.dockerwatch.model.MessagePattern;
 import com.greenature.dockerwatch.model.ResponseCode;
-import com.greenature.dockerwatch.model.User;
+import com.greenature.dockerwatch.model.UserDetails;
 import com.greenature.dockerwatch.shared.Values;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,10 +68,11 @@ public class HostController {
     }
 
     @PostMapping("/login")
-    public MessagePattern<ResponseCode> login(@RequestBody MessagePattern<User> request) {
-        User user = request.getMessage();
+    public MessagePattern<ResponseCode> login(@RequestBody MessagePattern<UserDetails> request) {
+        UserDetails userDetails = request.getMessage();
         ResponseCode responseCode = new ResponseCode();
         responseCode.setStatus("SUCCESS");
+        responseCode.setMessage(userDetails.getUsername());
         return new MessagePattern<>(request.getRequestid(), "", LocalDate.now().toEpochDay(), responseCode);
     }
 

@@ -2,6 +2,7 @@ package com.greenature.dockerwatch.services;
 
 import com.github.dockerjava.api.command.LogContainerCmd;
 import com.github.dockerjava.api.model.Container;
+import com.github.dockerjava.api.model.EventType;
 import com.github.dockerjava.api.model.Frame;
 import com.github.dockerjava.api.model.Image;
 import com.github.dockerjava.core.command.LogContainerResultCallback;
@@ -51,6 +52,11 @@ public class NotifierService {
         BaseHost baseHost = messagePattern.getMessage();
         List<Image> images = baseHost.getDockerClient().listImagesCmd().exec();
         simpMessagingTemplate.convertAndSendToUser(messagePattern.getUser(), "/topic/dockerwatch", images);
+    }
+
+    public void test() {
+        BaseHost baseHost = new BaseHost();
+        baseHost.getDockerClient().eventsCmd().withEventTypeFilter(EventType.IMAGE);
     }
 
 }

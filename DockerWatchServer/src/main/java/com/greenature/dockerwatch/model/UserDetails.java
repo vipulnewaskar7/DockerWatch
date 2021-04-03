@@ -1,10 +1,10 @@
 package com.greenature.dockerwatch.model;
 
-public class User {
+public class UserDetails {
     String username;
     String password;
 
-    public User(String username, String password) {
+    public UserDetails(String username, String password) {
         this.username = username;
         this.password = password;
     }
