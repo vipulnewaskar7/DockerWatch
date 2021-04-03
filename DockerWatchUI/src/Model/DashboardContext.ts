@@ -7,8 +7,10 @@ import { MessageStatus } from './MessageStatus';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { AppConfig } from 'src/app/app.config';
+import { Observable } from 'rxjs';
 
 export class DashboardContext{
+    
     hosts: Host[];
     Images: Image[];
     Containers: Container[];
@@ -88,6 +90,10 @@ export class DashboardContext{
 
     async GetContainer(host: Host) {
       
+    }
+
+    Logout(): Observable<MessagePattern<MessageStatus>> {
+        return this.httpService.post<MessagePattern<MessageStatus>>(AppConfig.Address.Login, {});
     }
 
 

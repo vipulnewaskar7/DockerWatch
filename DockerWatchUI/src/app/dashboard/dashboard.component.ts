@@ -38,10 +38,17 @@ export class DashboardComponent implements OnInit {
   }
 
   Logout(){
-    localStorage.setItem('user', "default" ); 
-    localStorage.setItem('isLoggedIn', "false");
-    this.login = false;
-    this.loginChange.emit(this.login);
+    this.DataContext.Logout().subscribe(data => {
+      if(data.message.status.includes("SUCCESS")){
+        localStorage.setItem('user', "default" ); 
+        localStorage.setItem('isLoggedIn', "false");
+        this.login = false;
+        this.loginChange.emit(this.login);
+        return true;
+      } else {
+        return false;
+      }
+    });
   }
 
 }
