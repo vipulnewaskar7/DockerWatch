@@ -4,9 +4,9 @@ public class LogChunk {
 
     String hostId;
     String containerId;
-    byte[] logChunk;
+    String logChunk;
 
-    public LogChunk(String hostId, String containerId, byte[] logChunk) {
+    public LogChunk(String hostId, String containerId, String logChunk) {
         this.hostId = hostId;
         this.containerId = containerId;
         this.logChunk = logChunk;
@@ -28,11 +28,11 @@ public class LogChunk {
         this.containerId = containerId;
     }
 
-    public byte[] getLogChunk() {
+    public String getLogChunk() {
         return logChunk;
     }
 
-    public void setLogChunk(byte[] logChunk) {
+    public void setLogChunk(String logChunk) {
         this.logChunk = logChunk;
     }
 }

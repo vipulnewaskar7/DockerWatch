@@ -24,18 +24,18 @@ public class NotifierService {
 
     public void startSendingLogs(MessagePattern<LogRequest> messagePattern) {
         LogRequest logRequest = messagePattern.getMessage();
-        BaseHost baseHost = logRequest.getBaseHost();
+        BaseHost baseHost = logRequest.getHost();
         Container container = logRequest.getContainer();
-        String containerId = "";
+        System.out.println("Host : " + baseHost.getName() + " Container : " + container.getId());
         CompletableFuture.runAsync(() -> {
-            LogContainerCmd logContainerCmd = dockerService.getDockerClient(baseHost).logContainerCmd(containerId);
+            LogContainerCmd logContainerCmd = dockerService.getDockerClient(baseHost).logContainerCmd(container.getId());
             logContainerCmd.withStdOut(true).withStdErr(true).withFollowStream(true);
             //TODO : Using ResultCallback.Adapter instead of deprecated
             logContainerCmd.exec(new LogContainerResultCallback() {
                 @Override
                 public void onNext(Frame item) {
                     System.out.println(new String(item.getPayload()));
-                    LogChunk logChunk = new LogChunk(baseHost.getId(), containerId, item.getPayload());
+                    LogChunk logChunk = new LogChunk(baseHost.getId(), container.getId(), new String(item.getPayload()));
                     SocketPattern<LogChunk> response = new SocketPattern<>(MessageType.LOGS, logChunk);
                     simpMessagingTemplate.convertAndSendToUser(messagePattern.getUser(), "/topic/dockerwatch", response);
                 }
