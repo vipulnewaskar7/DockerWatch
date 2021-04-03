@@ -3,6 +3,7 @@ import { HTTPService } from 'src/Services/HttpService';
 import { DashboardContext } from 'src/Model/DashboardContext';
 import { Host } from 'src/Model/Host';
 import { AppConfig } from '../app.config';
+import { MessagePattern } from 'src/Model/MessagePattern';
 
 @Component({
   selector: 'app-dashboard',
@@ -38,7 +39,8 @@ export class DashboardComponent implements OnInit {
   }
 
   Logout(){
-    this.DataContext.Logout().subscribe(data => {
+    var req = new MessagePattern<string>("Logout");
+    this.DataContext.Logout(req).subscribe(data => {
       if(data.message.status.includes("SUCCESS")){
         localStorage.setItem('user', "default" ); 
         localStorage.setItem('isLoggedIn', "false");

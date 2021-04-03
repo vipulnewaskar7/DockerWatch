@@ -92,8 +92,8 @@ export class DashboardContext{
       
     }
 
-    Logout(): Observable<MessagePattern<MessageStatus>> {
-        return this.httpService.post<MessagePattern<MessageStatus>>(AppConfig.Address.Login, {});
+    Logout(req: MessagePattern<string>): Observable<MessagePattern<MessageStatus>> {
+        return this.httpService.post<MessagePattern<MessageStatus>>(AppConfig.Address.Login, req);
     }
 
 
