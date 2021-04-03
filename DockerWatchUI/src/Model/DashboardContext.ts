@@ -8,6 +8,7 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { AppConfig } from 'src/app/app.config';
 import { Observable } from 'rxjs';
+import { LogRequest } from './LogRequest';
 
 export class DashboardContext{
     
@@ -85,11 +86,16 @@ export class DashboardContext{
     }
 
     async GetImages(host: Host) {
-      
+      this._send(host, AppConfig.Address.Images);
     }
 
     async GetContainer(host: Host) {
-      
+      this._send(host, AppConfig.Address.Containers);
+    }
+
+    async GetLogs(host: Host, container: Container) {
+      var req = new LogRequest(host, container);
+      this._send(req, AppConfig.Address.Containers);
     }
 
     Logout(req: MessagePattern<string>): Observable<MessagePattern<MessageStatus>> {
