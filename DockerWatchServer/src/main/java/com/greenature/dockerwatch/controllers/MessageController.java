@@ -33,17 +33,17 @@ public class MessageController {
         messagingTemplate.convertAndSendToUser(messagePattern.getUser(), "/topic/dockerwatch", response);
     }
 
-    @MessageMapping("/getlogs")
+    @MessageMapping("/logs")
     public void getLogs(@Payload MessagePattern<Container> messagePattern) {
         notifierService.startSendingLogs(messagePattern);
     }
 
-    @MessageMapping("/getimages")
+    @MessageMapping("/images")
     public void getImages(@Payload MessagePattern<BaseHost> messagePattern) {
         notifierService.startSendingImageList(messagePattern);
     }
 
-    @MessageMapping("/getcontainers")
+    @MessageMapping("/containers")
     public void getContainers(@Payload MessagePattern<BaseHost> messagePattern) {
         notifierService.startSendingContainerList(messagePattern);
     }
