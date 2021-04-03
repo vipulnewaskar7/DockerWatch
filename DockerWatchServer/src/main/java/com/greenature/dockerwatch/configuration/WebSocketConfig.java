@@ -1,4 +1,4 @@
-package com.greenature.dockerwatch.controllers;
+package com.greenature.dockerwatch.configuration;
 
 import com.greenature.dockerwatch.services.DockerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,18 +10,19 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 
 @Configuration
 @EnableWebSocketMessageBroker
-public class ContainerDetailsController implements WebSocketMessageBrokerConfigurer {
+public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Autowired
     DockerService service;
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        // registry.enableSimpleBroker("/subscribe");
+        registry.enableSimpleBroker("/subscribe");
+        registry.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // registry.addEndpoint("/logs").setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS();
 //        service.tailLogs();
     }
 

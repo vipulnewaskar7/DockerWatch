@@ -7,8 +7,12 @@ export const AppConfig = {
         DeleteHost:"https://rahul.jedhe.in/api/dockerwatch/deletehost.php",
         GetImages:"http://localhost:8080/api/v1/images",
         GetContainers:"http://localhost:8080/api/v1/containers",
-        GetLogs:"http://localhost:8080/logs/",
-        LogTopic:"/subscribe/logs",
-        SendLogMessage:"/containerslogs"
+        GetLogs:"http://localhost:8080/ws",
+        LogTopic:"/subscribe/topic/logs",
+        ContainerListsTopic:"/subscribe/topic/containerlists",
+        ImageListsTopic:"/subscribe/topic/imagelists",
+        SendLogMessage:"/app/logs",
+        SendContainerListsMessage:"/app/containerlists",
+        SendImageListsMessage:"/app/imagelists",
     }
 }
