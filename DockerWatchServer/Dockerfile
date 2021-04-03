@@ -6,7 +6,7 @@ COPY . .
 
 RUN mvn clean package spring-boot:repackage
 
-FROM maven:3.6.3-jdk-8-slim
+FROM openjdk:8-jre-alpine
 
 WORKDIR /app
 
