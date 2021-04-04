@@ -65,7 +65,7 @@
                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                 &nbsp;Delete
               </button>
-              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="DataContext.ConnectHost(DataContext.selectedHost)">
+              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="DataContext.ConnectHost(DataContext.selectedHost, topic)">
                 <i class="fa fa-chain-broken" aria-hidden="true"></i>
                 &nbsp;Disconnect
               </button>
@@ -84,9 +84,9 @@
           </div>
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Up time</h5>
+              <h5 class="card-title">Address</h5>
               <p class="card-text">
-                <small class="text-muted">{{ DataContext.selectedHost.status }}</small>
+                <small class="text-muted">{{ DataContext.selectedHost.address }}</small>
               </p>
             </div>
           </div>
@@ -120,9 +120,9 @@
               <h4>Containers</h4>
               <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">
-                    Export&nbsp;
-                    <i class="fa fa-file-text" aria-hidden="true"></i>
+                  <button (click)="DataContext.Refresh()" type="button" class="btn btn-sm btn-outline-secondary">
+                    Refresh&nbsp;
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
                   </button>
                 </div>
               </div>
@@ -137,7 +137,6 @@
                       <p class="mb-1">{{container.Image}}</p>
                       <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1">{{container.State}}</p>
-                        <small> Port : {{container.Ports[0].PublicPort}} </small>
                       </div>
                       <small>{{container.Status}}</small>
                     </a>
@@ -148,7 +147,7 @@
                 <div class="tab-content">
                   <div class="tab-pane fade {{(DataContext.selectedContainer && DataContext.selectedContainer.Id === container.Id) ? 'show active' : '' }}"
                     *ngFor="let container of DataContext.Containers;">
-                    <div class="card bg-dark text-white">
+                    <div class="card bg-dark text-white" *ngIf="DataContext.selectedContainer && DataContext.selectedContainer.Id === container.Id">
                       <h5 class="card-title">Logs</h5>
                       <pre><code class="plaintext text-white">{{ DataContext.logs }}</code></pre>
                     </div>
