@@ -39,6 +39,18 @@ export class DashboardContext{
       });
     }
 
+    Refresh(){
+      this.hosts =[];
+      this.Containers =[];
+      this.Images =[];
+      if(this.selectedHost){
+        this.Initialize();
+        this.GetContainer(this.selectedHost);
+        this.GetImages(this.selectedHost);
+        delete this.selectedContainer;
+      }
+    }
+
     ConnectHost(host: Host, topic: string){
       if (this.selectedHost && this.selectedHost.id === host.id) {
         //this._disconnect();
@@ -86,6 +98,7 @@ export class DashboardContext{
     SelectContainer(container: Container) {
       this.selectedContainer = container;
       if(this.selectedHost){
+        this.logs = "";
         this.GetLogs(this.selectedHost, this.selectedContainer);
       }
     }
