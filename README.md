@@ -123,6 +123,10 @@ This application has exposed RESTful API calls for external usage.
 
 _For more examples, please refer to the [Documentation](https://github.com/vipulnewaskar7/DockerWatch/blob/develop/API.md)_  
  
+ToDo : 
+1. docker configuration for external ip/network access
+2. add comment/help text to explain the behaviour (popups)
+3. add docker commands (start/stop container)
   
   
 RIP Best Practices   
